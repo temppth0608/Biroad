@@ -1,0 +1,466 @@
+@CHARSET "UTF-8";
+
+/*--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+--*/
+body {
+	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+}
+/*-header--*/
+.header {
+	background: #f7f7f7;
+	padding: 2em 0;
+}
+
+.header-logo {
+	float: left;
+	width: 50%;
+}
+
+.header-logo a {
+	text-decoration: none;
+	display: block;
+}
+
+.header-logo a:hover {
+	text-decoration: none;
+}
+
+.header-logo a h1 {
+	color: #1ba8ed;
+	margin: 0;
+	font-size: 52px;
+}
+
+.top-nav {
+	float: left;
+	margin-top: .3em;
+}
+
+span.menu {
+	display: none;
+}
+
+.top-nav ul {
+	margin: 0;
+	padding: 0;
+}
+
+.top-nav ul li {
+	list-style-type: none;
+	display: inline-block;
+	padding: 1.7em 1em;
+}
+
+.top-nav ul li a {
+	text-decoration: none;
+	font-size: 15px;
+	font-weight: 500;
+	color: #222222;
+	position: relative;
+	letter-spacing: 1px;
+	text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+	padding-bottom: 10px;
+}
+
+.top-nav ul li a:hover,.top-nav ul li a:focus {
+	outline: none;
+}
+
+.top-nav ul li a::after {
+	position: absolute;
+	top: 75%;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	background: #313f4a;
+	content: '';
+	opacity: 0;
+	-webkit-transition: height 0.3s, opacity 0.3s, -webkit-transform 0.3s;
+	-moz-transition: height 0.3s, opacity 0.3s, -moz-transform 0.3s;
+	transition: height 0.3s, opacity 0.3s, transform 0.3s;
+	-webkit-transform: translateY(-10px);
+	-moz-transform: translateY(-10px);
+	transform: translateY(-10px);
+}
+
+.top-nav ul li a:hover::after,.top-nav ul li a:focus::after,.top-nav ul li a.active::after {
+	height: 3px;
+	opacity: 1;
+	-webkit-transform: translateY(0px);
+	-moz-transform: translateY(0px);
+	transform: translateY(0px);
+}
+
+.social-icons {
+	float: left;
+	width: 13%;
+	padding-top: 1.8em;
+}
+
+.social-icons ul {
+	margin: 0;
+	padding: 0;
+}
+
+.social-icons ul li {
+	list-style-type: none;
+	display: inline-block;
+}
+
+/* banner */
+.banner {
+	color: #fff;
+	font-family: "Open Sans", sans-serif;
+	background: url(../image/main_image.png) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 659px;
+	position: relative;
+}
+
+.road-link {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	margin-bottom: 0px;
+}
+
+#loggit {
+	color: #fff;
+	background: url(../image/75.png);
+	width: 520px;
+	margin: 0% auto 0;
+	padding: 20px 40px;
+}
+
+#loggit h1 {
+	text-align: center;
+	font-weight: 700;
+	margin: 5px 0 15px;
+}
+
+#loggit h3 {
+	text-align: center;
+	font-size: 18px;
+	color: #bbb;
+	margin: 0 0 20px;
+}
+
+#loggit .input-group-addon {
+	border: 0 none;
+}
+
+#loggit .form-control {
+	border: 0 none;
+}
+
+#loggit .form-control:focus {
+	box-shadow: none;
+}
+
+#loggit .formSubmit {
+	margin-bottom: 25px;
+}
+
+#loggit .submitWrap {
+	text-align: right;
+}
+
+#loggit .formNotice {
+	margin: 0;
+	font-size: 13px;
+}
+
+#loggit .formNotice span {
+	/* 	cursor: pointer;
+ */
+	color: #FFFFFF;
+}
+
+#loggit .formNotice span:hover,#loggit .formNotice span:focus {
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+
+#loggit #regForm {
+	display: none;
+}
+
+#loggit #withForm {
+	display: none;
+}
+
+.my-content {
+	position: relative;
+}
+
+.post-pannel {
+	position: relative;
+	display: inline-block;
+	clear: initial;
+	min-height: 350px;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	margin-top: 30px;
+	background-color: white;
+	padding-left: 0px;
+	padding-right: 0px;
+	box-shadow: 0px 2px 4px 0px #ddd;
+	border-radius: 3px;
+	width: 100%;
+	font-size: 13px;
+}
+
+.post-title {
+	width: 100%;
+	height: 40px;
+}
+
+.post-img {
+	width: 100%;
+	height: 120px;
+	position: relative;
+	overflow: hidden;
+}
+
+.post-description {
+	width: 100%;
+	height: 150px;
+	color: #000000;
+}
+
+div.post-summary>p,div.post-title>p,div.post-description>p {
+	padding-top: 10px;
+	margin-left: 10px;
+	line-height: 1.3em;
+	word-wrap: break-word;
+}
+
+.post-summary {
+	width: 100%;
+	height: 85px;
+	border-bottom: 1px solid #ddd;
+	font-size: 12px;
+}
+
+div.post-summary>p,div.post-title>p,div.post-description>p {
+	padding-top: 10px;
+	margin-left: 10px;
+	line-height: 1.3em;
+	word-wrap: break-word;
+}
+
+.post-bottom-bar {
+	width: 100%;
+	height: 40px;
+	background-color: white;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+.post-heart-buttons {
+	width: 30%;
+	display: inline-block;
+}
+
+.heart-box {
+	display: inline-block;
+	border-radius: 3px;
+	float: left;
+	padding: 0px 0px 0px 0px;
+	height: 25px;
+	margin-left: 5px;
+	background-color: whitesmoke;
+	position: absolute;
+	min-width: 80px;
+	box-shadow: 1px 1px 1px #ddd;
+}
+
+.empty-heart {
+	color: gray;
+	transition-duration: .5s;
+}
+
+.post-count-heart {
+	font-size: 11px;
+	margin-top: 16px;
+	color: #555;
+	padding-right: 8px;
+	cursor: pointer;
+}
+
+.post-count-heart {
+	display: inline-block;
+	color: #555;
+	background-color: transparent;
+	border: none;
+	margin-top: 3px;
+	position: relative;
+	float: left;
+}
+
+div.post-heart-buttons>form>div>a {
+	color: #555;
+	text-decoration: none;
+}
+
+.comment-count {
+	color: #777;
+	font-size: 11px;
+	text-decoration: none;
+}
+
+.heart-box span {
+	color: #000000;
+}
+
+.writeForm {
+	font-family: "Open Sans", sans-serif;
+	background: url(../image/dark_gray.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 659px;
+	position: relative;
+}
+
+.header_name {
+	font-family: "Open Sans", sans-serif;
+	color: #005666;
+}
+
+.formStruct {
+	font-family: "Open Sans", sans-serif;
+	background: url(../image/light_gray.png) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 659px;
+	position: relative;
+	margin-top: 1cm;
+	margin-bottom: 2cm;
+}
+
+.view_Form {
+	font-family: "Open Sans", sans-serif;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 659px;
+	position: relative;
+	background: url(../image/main_image.png);
+}
+
+.view_container {
+	background-color: white;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 659px;
+	position: relative;
+	margin-top: 1cm;
+	margin-bottom: 2cm;
+	font-family: "Open Sans", sans-serif;
+}
+
+hr {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	border: 0;
+	border-top: 1px solid #eee;
+}
+
+.inform_text {
+	color: red;
+}
+
+.text_area {
+	position: relative;
+	display: inline-block;
+	clear: initial;
+	min-height: 420px;
+	margin-left: 7cm;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	margin-top: 30px;
+	background-color: white;
+	padding-left: 0px;
+	padding-right: 0px;
+	border: solid;
+	border-color: blue;
+	border-radius: 1px;
+	width: 60%;
+	border-width: thin;
+	font-size: 13px;
+}
+
+.contents {
+	width: 100%;
+	height: 230px;
+}
+
+.writeComment {
+	bottom: 0px;
+	left: 0px;
+	background-color: #d3d3d3;
+	right: 0px;
+	margin-bottom: 0px;
+	width: 100%;
+	height: 40px;
+}
+
+.comment_form {
+	width: 100%;
+	height: 150px;
+	background-color: #d3d3d3;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+.roadInfo {
+	color : #000000;
+}
+.roadDescription {
+	color : #000000;
+}
+.roadImage {
+	color : #000000;
+}
+
+/**********************************************************************/
+/****************** MEDIA QUERIES ************************************/
+/********************************************************************/
+@media ( max-width :979px) {
+}
+
+@media ( max-width : 768px) {
+	body {
+		padding-bottom: 0;
+	}
+	#loggit {
+		margin-top: 0;
+		width: 100%;
+	}
+	#loggit .submitWrap {
+		margin-top: 15px;
+		text-align: center;
+	}
+}
+
+@media ( max-width : 500px) {
+	#loggit {
+		width: 100%;
+	}
+}
