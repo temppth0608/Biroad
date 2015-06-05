@@ -42,9 +42,11 @@
 	response.sendRedirect("admin_main.jsp");
 	} else {
 		if(member.loginCheck(Member.getMemberId(), Member.getMemberPass()) == 1) {
-		session.setAttribute("member", Member);	
-		response.sendRedirect("main.jsp");
-		} else {
+	Member mem = member.getMemDB(Member.getMemberId());
+/* 	request.setAttribute("mem", mem);
+ */	session.setAttribute("member", Member);
+	pageContext.forward("main.jsp");		
+	} else {
 		out.println("<script>alert('비밀번호가 틀립니다.');history.go(-1);</script>");
 		}
 	}
@@ -67,6 +69,7 @@
 		
 	} else if(action.equals("edit")) {
 		if(member.updateMemDB(Member)) {
+	
 	out.println("<script>alert('수정에 성공하셧습니다.'); location.href='main.jsp'; </script>");
 		} else {
 	out.println("<script>alert('수정에 실패하엿습니다(수정값 확인)');history.go(-1);</script>");
@@ -121,22 +124,22 @@
 		String boardTitle = (String) request.getParameter("boardTitle");
 		
 		if(boardPass.equals(inputPassword)) {
-			request.setAttribute("boardId", boardId);
-			request.setAttribute("boardRoad", boardRoad);
-			request.setAttribute("boardText", boardText);
-			request.setAttribute("boardTitle", boardTitle);
-			
-			pageContext.forward("edit.jsp");
+	request.setAttribute("boardId", boardId);
+	request.setAttribute("boardRoad", boardRoad);
+	request.setAttribute("boardText", boardText);
+	request.setAttribute("boardTitle", boardTitle);
+	
+	pageContext.forward("edit.jsp");
 		} else {
-			out.println("<script>alert('비밀번호가 일치하지 않습니다.');history.go(-1);</script>");
+	out.println("<script>alert('비밀번호가 일치하지 않습니다.');history.go(-1);</script>");
 		}
 		
 	}else if(action.equals("editBoard")) {
 		 
 		if(board.updateBoardDB(Board.getBoardId(), Board.getBoardTitle(), Board.getBoardText(), Board.getBoardPass(), Board.getBoardDate())) {
-			out.println("<script>alert('수정에 성공하셧습니다.'); location.href='bistory.jsp'; </script>");
+	out.println("<script>alert('수정에 성공하셧습니다.'); location.href='bistory.jsp'; </script>");
 		} else {
-			out.println("<script>alert('수정에 실패하셧습니다.'); location.href='bistory.jsp'; </script>");
+	out.println("<script>alert('수정에 실패하셧습니다.'); location.href='bistory.jsp'; </script>");
 		}
 		
 	} else if(action.equals("deleteBoard")) {

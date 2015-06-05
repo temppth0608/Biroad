@@ -16,7 +16,8 @@
 
 <%
 	Member mem = (Member) session.getAttribute("member");
-%>
+/* 	Member member = (Member) request.getAttribute("mem");
+ */%>
 
 </head>
 <body>
@@ -127,8 +128,16 @@
 									<div class="form-group">
 										<div class="col-xs-12">
 											<div class=input-group>
+												<span class="input-group-addon"> <img src="../image/key.png" width="15" height="15">
+												</span> <input type="password" name="memberPass2" class="form-control input-lg" placeholder="비밀번호확인" autocomplete="off">
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-xs-12">
+											<div class=input-group>
 												<span class="input-group-addon"> <img src="../image/name.png" width="15" height="15">
-												</span> <input type="text" name="memberName" class="form-control input-lg" placeholder="홍길동" autocomplete="off">
+												</span> <input type="text" <%-- value="<%=member.getMemberName() %>" --%> name="memberName" class="form-control input-lg" placeholder="홍길동" autocomplete="off">
 											</div>
 										</div>
 									</div>
@@ -136,7 +145,7 @@
 										<div class="col-xs-12">
 											<div class=input-group>
 												<span class="input-group-addon"> <img src="../image/email.png" width="15" height="15">
-												</span> <input type="text" name="memberEmail" class="form-control input-lg" placeholder="xxx.google.com" autocomplete="off">
+												</span> <input type="text" <%-- value="<%=member.getMemberEmail() %>" --%> name="memberEmail" class="form-control input-lg" placeholder="xxx.google.com" autocomplete="off">
 											</div>
 										</div>
 									</div>
@@ -144,7 +153,7 @@
 										<div class="col-xs-12">
 											<div class=input-group>
 												<span class="input-group-addon"> <img src="../image/gender.png" width="15" height="15">
-												</span> <input type="text" name="memberGender" class="form-control input-lg" placeholder="남 or 여" autocomplete="off">
+												</span> <input type="text" <%-- value="<%=member.getMemberGender() %>" --%> name="memberGender" class="form-control input-lg" placeholder="남 or 여" autocomplete="off">
 											</div>
 										</div>
 									</div>
@@ -152,7 +161,7 @@
 										<div class="col-xs-12">
 											<div class=input-group>
 												<span class="input-group-addon"> <img src="../image/bicycle.png" width="15" height="15">
-												</span> <input type="text" name="model" class="form-control input-lg" placeholder="MTB" autocomplete="off"> <input type=hidden
+												</span> <input type="text" <%-- value="<%=member.getModel() %>" --%> name="model" class="form-control input-lg" placeholder="MTB" autocomplete="off"> <input type=hidden
 													name="isManager">
 											</div>
 										</div>
@@ -270,6 +279,11 @@
 			if (document.form2.memberGender.value != "남" && document.form2.memberGender.value != "여") {
 				alert("성별 형식이 올바르지 않습니다.");
 				document.form2.memberGender.focus();
+				return;
+			}
+			if (document.form2.memberPass.value != document.form2.memberPass2.value) {
+				alert("비밀번호가 일치하지 않습니다.");
+				document.form2.memberPass2.focus();
 				return;
 			}
 			document.form2.submit();

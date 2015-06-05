@@ -26,6 +26,10 @@
 			<!-- 로그인폼 -->
 			<form action="biroad_control.jsp" name="form1" id="logForm" method="post" class="form-horizontal" style="display: block;">
 				<input type=hidden name="action" value="login">
+				<input type=hidden name="action" value="login">
+				<input type=hidden name="action" value="login">
+				<input type=hidden name="action" value="login">
+				
 				<div class="form-group">
 					<div class="col-xs-12">
 						<div class=input-group>
@@ -77,9 +81,18 @@
 							<span class="input-group-addon"> <img src="../image/key.png" width="15" height="15">
 							</span> <input type="password" name="memberPass" class="form-control input-lg" placeholder="Password" autocomplete="off">
 						</div>
-
 					</div>
 				</div>
+
+				<div class="form-group">
+					<div class="col-xs-12">
+						<div class=input-group>
+							<span class="input-group-addon"> <img src="../image/key.png" width="15" height="15">
+							</span> <input type="password" name="memberPass2" class="form-control input-lg" placeholder="비밀번호확인" autocomplete="off">
+						</div>
+					</div>
+				</div>
+
 				<div class="form-group">
 					<div class="col-xs-12">
 						<div class=input-group>
@@ -172,11 +185,23 @@
 				document.form2.memberEmail.focus();
 				return;
 			}
+			
+			if(document.form2.memberId.value.length<4 || document.form2.memberId.value.length>12) {
+				alert("아이디를 4-12로 해주세요");
+				document.form2.memberId.focus();
+				return;
+			}
 
 			if (document.form2.memberGender.value != "남"
 					&& document.form2.memberGender.value != "여") {
 				alert("성별 형식이 올바르지 않습니다.");
 				document.form2.memberGender.focus();
+				return;
+			}
+
+			if (document.form2.memberPass.value != document.form2.memberPass2.value) {
+				alert("비밀번호가 일치하지 않습니다.");
+				document.form2.memberPass2.focus();
 				return;
 			}
 			document.form2.submit();

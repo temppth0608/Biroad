@@ -148,6 +148,14 @@
 									<div class="form-group">
 										<div class="col-xs-12">
 											<div class=input-group>
+												<span class="input-group-addon"> <img src="../image/key.png" width="15" height="15">
+												</span> <input type="password" name="memberPass2" class="form-control input-lg" placeholder="비밀번호확인" autocomplete="off">
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-xs-12">
+											<div class=input-group>
 												<span class="input-group-addon"> <img src="../image/name.png" width="15" height="15">
 												</span> <input type="text" name="memberName" class="form-control input-lg" placeholder="홍길동" autocomplete="off">
 											</div>
@@ -286,7 +294,7 @@
 						<br>
 						<div class="row">
 							<div class="col-md-10 col-md-offset-1">
-								<textarea class="form-control" name="boardText" placeholder="내용을 입력하세요." rows="10" value="<%=boardText%>"></textarea>
+								<textarea class="form-control" name="boardText" placeholder="내용을 입력하세요." rows="10"><%=boardText%></textarea>
 							</div>
 							<div class="col-md-1"></div>
 						</div>
@@ -344,6 +352,11 @@
 					&& document.form2.memberGender.value != "여") {
 				alert("성별 형식이 올바르지 않습니다.");
 				document.form2.memberGender.focus();
+				return;
+			}
+			if (document.form2.memberPass.value != document.form2.memberPass2.value) {
+				alert("비밀번호가 일치하지 않습니다.");
+				document.form2.memberPass2.focus();
 				return;
 			}
 			document.form2.submit();

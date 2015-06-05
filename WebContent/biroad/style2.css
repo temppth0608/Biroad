@@ -438,6 +438,18 @@ hr {
 .roadImage {
 	color : #000000;
 }
+.carousel-control.left, .carousel-control.right {
+    background-image: none
+}
+.des {
+	background: url(../image/des.png) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	position: relative;
+	
+}
 
 /**********************************************************************/
 /****************** MEDIA QUERIES ************************************/
