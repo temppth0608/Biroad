@@ -33,6 +33,24 @@
 	}
 %>
 
+<script src="https://apis.skplanetx.com/tmap/js?version=1&format=javascript&appKey=178fb3c8-f067-37ad-882b-bc1fdc8cd031"></script>
+<script type="text/javascript">
+	var pr_3857 = new Tmap.Projection("EPSG:3857");
+
+	//pr_4326 인스탄스 생성.
+	var pr_4326 = new Tmap.Projection("EPSG:4326");
+
+	var lonlat2 = new Tmap.LonLat(<%=path.getPathStarY() %>,<%= path.getPathStarX() %>).transform(pr_4326,pr_3857);
+	var lonlat1 = new Tmap.LonLat(<%=path.getPathEndY() %>,<%=path.getPathEndX() %>).transform(pr_4326,pr_3857);
+
+	var c = lonlat1;
+	var d = lonlat2;
+	function go() {
+		document.form1.start.value = d;
+		document.form1.end.value = c;
+	}
+</script>
+
 </head>
 <body>
 	<div class="header" id="header">
@@ -225,11 +243,13 @@
 		 <div class="container-fluid">
 			<div class="row">
 				<div class="col-md-3">
+				<br><br>
 					<div class="roadInfo">
 						<div class="row">
 							<h3>
 								&nbsp&nbsp<%=path.getPathName()%></h3>
 						</div>
+						<br><br>
 						<div class="row">
 							<h3>&nbsp&nbsp<%=tPathName %></h3>
 						</div>
@@ -313,6 +333,7 @@
 						<div class="row">
 							<h1><%=path.getPathName()%></h1>
 						</div>
+						<br><br>
 						<div class="row">
 							<h2><%=tPathName %></h2>
 						</div>
@@ -329,25 +350,81 @@
 						<br>
 						<h2>코스지도</h2>
 						<br>
-						<div id="map" style="width: 80%; height: 300px;"></div>
+						<div id="map" style="width: 80%; height: 350px;"></div>
 
 						<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=44b3d9dc2ecf2d8c7dba2d4faf349c31"></script>
 						<script>
-							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+						var foo = new Array();
+						var starx = "<%= path.getPathStarX() %>";
+						var stary = "<%= path.getPathStarY() %>";
+						var endx = "<%= path.getPathEndX() %>";
+						var endy = "<%= path.getPathEndY() %>";
+							starx = parseFloat(starx);
+							stary = parseFloat(stary);
+							endx = parseFloat(endx);
+							endy = parseFloat(endy);
+						
+
+							var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 							mapOption = {
-								center : new daum.maps.LatLng(33.450701,
-										126.570667), // 지도의 중심좌표
-								level : 3
+								center : new daum.maps.LatLng(starx, stary), // 지도의 중심좌표
+								level : 8
 							// 지도의 확대 레벨
 							};
 
-							// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-							var map = new daum.maps.Map(mapContainer, mapOption);
-						</script>
+							var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
+							// 마커를 표시할 위치와 title 객체 배열입니다 
+							var positions = [ {
+								title : '시작점',
+								latlng : new daum.maps.LatLng(starx, stary)
+							}, {
+								title : '끝점',
+								latlng : new daum.maps.LatLng(endx, endy)
+							}, ];
+
+							// 마커 이미지의 이미지 주소입니다
+							var imageSrc = "http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+							foo[0] = '<p style="margin:7px 22px 7px 10px;font:10px/1.5 sans-serif">시작점입니다 : "<%= path.getPathStart() %>"</p>';
+							foo[1] = '<p style="margin:7px 22px 7px 10px;font:10px/1.5 sans-serif">도착점입니다 : "<%= path.getPathEnd() %>"</p>';
+							for (var i = 0; i < positions.length; i++) {
+
+								// 마커 이미지의 이미지 크기 입니다
+								var imageSize = new daum.maps.Size(24, 35);
+
+								// 마커 이미지를 생성합니다    
+								var markerImage = new daum.maps.MarkerImage(imageSrc,
+										imageSize);
+
+								// 마커를 생성합니다
+								var marker = new daum.maps.Marker({
+									map : map, // 마커를 표시할 지도
+									position : positions[i].latlng, // 마커를 표시할 위치
+									title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+									image : markerImage,
+									clickable : true
+								// 마커 이미지 
+
+								});
+								marker.setMap(map);
+								var infowindow = new daum.maps.InfoWindow({
+
+									content : foo[i],
+									position : positions[i].latlng,
+									removable : true
+								});
+
+								infowindow.open(map, marker);
+							}
+						</script>
 					</div>
 					<div class="bigRoadBtn">
-						<button type="submit" class="btn btn-primary">새창으로보기</button>
+						<form name=form1 method=post action=test3.jsp>
+							<input type=hidden name="start" id="start" value=""> 
+							<input type=hidden name="end" id="end" value="">
+							<input onclick="go()" type="submit" class="btn btn-primary" value="자세히보기">
+						</form>
 					</div>
 				</div>
 			</div>

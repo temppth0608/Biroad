@@ -18,18 +18,8 @@
 	//pr_4326 인스탄스 생성.
 	var pr_4326 = new Tmap.Projection("EPSG:4326");
 
-	var lonlat2 = new Tmap.LonLat(
-<%=stary%>
-	,
-<%=starx%>
-	).transform(pr_4326,
-			pr_3857);
-	var lonlat1 = new Tmap.LonLat(
-<%=endy%>
-	,
-<%=endx%>
-	).transform(pr_4326,
-			pr_3857);
+	var lonlat2 = new Tmap.LonLat(<%=stary%>,<%=starx%>).transform(pr_4326,pr_3857);
+	var lonlat1 = new Tmap.LonLat(<%=endy%>,<%=endx%>).transform(pr_4326,pr_3857);
 	//var a = 37.41176072487254;
 	//var b = 126.68014734789062;
 
@@ -48,8 +38,9 @@
 </script>
 </head>
 <form name=form1 method=post action=test3.jsp>
-	<input type=hidden name="start" id="start" value=""> <input type=hidden name="end" id="end" value=""> <input type="submit"
-		onclick="go()" value="id 중복확인">
+	<input type=hidden name="start" id="start" value=""> 
+	<input type=hidden name="end" id="end" value=""> 
+	<input type="submit" onclick="go()" value="id 중복확인">
 </form>
 
 <body onload="initTmap()">
