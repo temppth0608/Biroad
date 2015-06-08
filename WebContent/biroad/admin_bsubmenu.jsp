@@ -44,10 +44,10 @@
 			</a>
 		</li>
 		<li role="presentation">
-			<a>게시물수정</a>
+			<a href="admin_main.jsp?context=13&mode=3">게시물수정</a>
 		</li>
 		<li role="presentation">
-			<a>게시물삭제</a>
+			<a href="admin_main.jsp?context=14&mode=3">게시물삭제</a>
 		</li>
 	</ul>
 

@@ -40,7 +40,7 @@
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">
 					<li><a href="main.jsp">도로검색</a></li>
-					<li><a href="#">도로추천</a></li>
+					<li><a href="recommend.jsp">도로추천</a></li>
 					<li><a href="#">BI STORY</a></li>
 					<li><a href="inform.jsp">서비스소개</a></li>
 				</ul>
@@ -229,8 +229,8 @@
 										value="Submit" align="absmiddle">
 									<%-- 										<input type=hidden name="memberId" value="<%=mem.getMemberId()%>">
  --%>
-									<input type=hidden name="memberId" value="<%=mem.getMemberId()%>">
-									 <input type=hidden name="boardRoad" value="<%=Board.getBoardRoad() %>">
+									<input type=hidden name="memberId" value="<%=mem.getMemberId()%>"> <input type=hidden name="boardRoad"
+										value="<%=Board.getBoardRoad()%>">
 								</form>
 							</div>
 							<div class="row">
@@ -241,16 +241,26 @@
 					<div class="col-md-10">
 						<div class="tab">
 							<ul class="nav nav-tabs">
-								<li role="presentation"><a href="bistory.jsp">아라<br>자전거길</a></li>
-								<li role="presentation" class="active"><a href="#">한강종주<br>자전거길</a></li>
-								<li role="presentation"><a href="bistory3.jsp">남한강<br>자전거길</a></li>
-								<li role="presentation"><a href="bistory4.jsp">북한강<br>자전거길</a></li>
-								<li role="presentation"><a href="bistory5.jsp">세제<br>자전거길</a></li>
-								<li role="presentation"><a href="bistory6.jsp">낙동강<br>자전거길</a></li>
-								<li role="presentation"><a href="bistory7.jsp">금강<br>자전거길</a></li>
-								<li role="presentation"><a href="bistory8.jsp">영산강<br>자전거길</a></li>
-								<li role="presentation"><a href="bistory9.jsp">섬진강<br>자전거길</a></li>
-								<li role="presentation"><a href="bistory10.jsp">오천<br>자전거길</a></li>
+								<li role="presentation"><a href="bistory.jsp">아라<br>자전거길
+								</a></li>
+								<li role="presentation" class="active"><a href="#">한강종주<br>자전거길
+								</a></li>
+								<li role="presentation"><a href="bistory3.jsp">남한강<br>자전거길
+								</a></li>
+								<li role="presentation"><a href="bistory4.jsp">북한강<br>자전거길
+								</a></li>
+								<li role="presentation"><a href="bistory5.jsp">세제<br>자전거길
+								</a></li>
+								<li role="presentation"><a href="bistory6.jsp">낙동강<br>자전거길
+								</a></li>
+								<li role="presentation"><a href="bistory7.jsp">금강<br>자전거길
+								</a></li>
+								<li role="presentation"><a href="bistory8.jsp">영산강<br>자전거길
+								</a></li>
+								<li role="presentation"><a href="bistory9.jsp">섬진강<br>자전거길
+								</a></li>
+								<li role="presentation"><a href="bistory10.jsp">오천<br>자전거길
+								</a></li>
 							</ul>
 						</div>
 					</div>
@@ -284,7 +294,7 @@
 									</div>
 									<div class="post-description">
 										<p class="mobile-post-desc">
-											<strong><%=board.getBoardText()%> </strong>
+											<weak><%=board.getBoardText()%> </weak>
 										</p>
 									</div>
 									<div class="post-bottom-bar">

@@ -40,7 +40,7 @@
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">
 					<li><a href="main.jsp">도로검색</a></li>
-					<li><a href="#">도로추천</a></li>
+					<li><a href="recommend.jsp">도로추천</a></li>
 					<li><a href="#">BI STORY</a></li>
 					<li><a href="inform.jsp">서비스소개</a></li>
 				</ul>
@@ -294,7 +294,7 @@
 									</div>
 									<div class="post-description">
 										<p class="mobile-post-desc">
-											<strong><%=board.getBoardText()%> </strong>
+											<weak><%=board.getBoardText()%> </weak>
 										</p>
 									</div>
 									<div class="post-bottom-bar">

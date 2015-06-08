@@ -32,24 +32,25 @@
 <%
 	String action = request.getParameter("action");
 	String id = request.getParameter("id");
+	String ab = request.getParameter("id1");
 	
  	//사용자 로그인 모듈 
 	 if(action.equals("login")) {
 		if(member.isExistId(Member.getMemberId()) == 2) {
-	out.println("<script>alert('등록되지 않은 아이디 입니다.');history.go(-1);</script>");
+			out.println("<script>alert('등록되지 않은 아이디 입니다.');history.go(-1);</script>");
 		} else {
-	if(member.isManager(Member.getMemberId(), Member.getMemberPass())) {
-	response.sendRedirect("admin_main.jsp");
-	} else {
-		if(member.loginCheck(Member.getMemberId(), Member.getMemberPass()) == 1) {
-	Member mem = member.getMemDB(Member.getMemberId());
+			if(member.isManager(Member.getMemberId(), Member.getMemberPass())) {
+			response.sendRedirect("admin_main.jsp");
+			} else {
+				if(member.loginCheck(Member.getMemberId(), Member.getMemberPass()) == 1) {
+				Member mem = member.getMemDB(Member.getMemberId());
 /* 	request.setAttribute("mem", mem);
- */	session.setAttribute("member", Member);
-	pageContext.forward("main.jsp");		
-	} else {
-		out.println("<script>alert('비밀번호가 틀립니다.');history.go(-1);</script>");
-		}
-	}
+ */				session.setAttribute("member", Member);
+				pageContext.forward("main.jsp");		
+				} else {
+					out.println("<script>alert('비밀번호가 틀립니다.');history.go(-1);</script>");
+				}
+			}
 		}
 	//사용자 회원가입 모듈	
 	} else if(action.equals("register")) {
@@ -384,5 +385,110 @@
 	out.println("<script>alert('도로수정 실패.');history.go(-1);</script>");
 		}
 		
+	} else if (action.equals("show")) {
+        
+        TotalPath tpath = totalpath.getTPDB(id);
+        request.setAttribute("totalpath",tpath);
+        pageContext.forward("test5.jsp");
+        
+    } else if(action.equals("imageIndex")) {
+    	String index = request.getParameter("index");
+    	TotalPath tp = totalpath.getTPDB(index);
+    	request.setAttribute("tp", tp);
+    	pageContext.forward("total_path.jsp");
+    	
+    } else if (action.equals("subPathView")) {
+    	String pathId = request.getParameter("pathId");
+    	String tPathName = path.getTotalPathName(pathId);
+    	String tPathId = request.getParameter("tPathId");
+
+    	Path selectedPath = path.getPDB(pathId);
+    	request.setAttribute("path",selectedPath);
+    	request.setAttribute("tPathId", tPathId);
+    	request.setAttribute("tPathName", tPathName);
+
+    	pageContext.forward("path.jsp");
+    	
+    } else if (action.equals("bsel")) {
+		int index = 0;
+		String req = null;
+		String how = null;
+		req = (String) request.getParameter("obj");
+		how = (String) request.getParameter("how");
+		if (how.equals("ID")) {
+			index = 0;
+		} else if (how.equals("ROAD")) {
+			index = 1;
+		} else {
+			index = 2;
+		}
+		ArrayList<Board> list = board.findInfo(req, index);
+		request.setAttribute("list", list);
+
+		pageContext.forward("admin_main.jsp?mode=3&context=13");
 	}
+	//게시물 삭제검색
+	else if (action.equals("bsel1")) {
+		int index = 0;
+		String req = null;
+		String how = null;
+		req = (String) request.getParameter("obj");
+		how = (String) request.getParameter("how");
+		if (how.equals("ID")) {
+			index = 0;
+		} else if (how.equals("ROAD")) {
+			index = 1;
+		} else {
+			index = 2;
+		}
+		ArrayList<Board> list = board.findInfo(req, index);
+		request.setAttribute("list", list);
+
+		pageContext.forward("admin_main.jsp?mode=3&context=14");
+	}
+	//수정버튼클릭시 이동
+	else if (action.equals("bedit")) {
+		/*Member mem = member.getMemDB(id);
+		request.setAttribute("member", mem);
+		pageContext.forward("admin_edit.jsp");*/
+		Board bo = board.getBDB(id);
+		request.setAttribute("board", bo);
+		pageContext.forward("admin_bedit.jsp");
+
+	}
+ 	
+ 	else if (action.equals("bupdate")) {
+ 		
+		if(board.updateBoDB(Board)){
+			out.println("<script>alert('수정에 성공하셧습니다.'); location.href='admin_main.jsp?mode=3&context=13'; </script>");
+		} else {
+			out.println("<script>alert('수정에 실패하셧습니다.');history.go(-1);</script>");
+		}
+	
+	} else if (action.equals("bdel")) {
+		int id1 = Integer.parseInt((String) request.getParameter("id1"));
+		if (board.deleteBoard(id1)) {
+			out.println("<script>alert('게시물삭제 성공.'); location.href='admin_main.jsp?mode=3&context=14'; </script>");
+		} else {
+			out.println("<script>alert('게시물삭제 실패.');history.go(-1);</script>");
+		}
+		
+	} else if (action.equals("content")){
+		
+		Board bo = board.getBDB(ab);
+		request.setAttribute("board", bo);
+		pageContext.forward("admin_content.jsp");
+	}
+ 	
+	 /*if (board.updateBoardDB(Board.getBoardId(),
+		Board.getBoardTitle(), Board.getBoardText(),
+		Board.getBoardPass(), Board.getBoardDate())) {
+		out.println("<script>alert('수정에 성공하셧습니다.'); location.href='admin_main.jsp?mode=3&context=13.jsp'; </script>");
+	} else {
+		out.println("<script>alert('수정에 실패하셧습니다.');history.go(-1);</script>");
+	}*/
+
+	/*TotalPath tpath = totalpath.getTPDB(id);
+	request.setAttribute("totalpath", tpath);
+	pageContext.forward("admin_detail.jsp");*/
 %>

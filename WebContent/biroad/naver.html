@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<title>OpenAPI Map Test - 폴리곤, 폴리라인 테스트</title>
+<!-- prevent IE6 flickering -->
+<script type="text/javascript">
+	try {
+		document.execCommand('BackgroundImageCache', false, true);
+	} catch (e) {
+	}
+</script>
+
+<script type="text/javascript" src="http://openapi.map.naver.com/openapi/naverMap.naver?ver=2.0&key=f32441ebcd3cc9de474f8081df1e54e3"></script>
+</head>
+<body>
+	<div id="testMap" style="border: 1px solid #000; width: 500px; height: 400px; margin: 20px;"></div>
+	<script type="text/javascript">
+		var oPoint = new nhn.api.map.LatLng(37.5010226, 127.0396037); // -  지도의 중심점을 나타내는 변수 선언
+		nhn.api.map.setDefaultPoint('LatLng'); // - 지도에서 기본적으로 사용하는 좌표계를 설정합니다.
+		var markerCount = 0;
+		oMap = new nhn.api.map.Map('testMap', {
+			point : oPoint,
+			zoom : 10, // - 초기 줌 레벨은 10으로 둔다.
+			enableWheelZoom : true,
+			enableDragPan : true,
+			enableDblClickZoom : false,
+			mapMode : 0,
+			activateTrafficMap : false,
+			activateBicycleMap : false,
+			minMaxLevel : [ 1, 14 ],
+			size : new nhn.api.map.Size(500, 400)
+		});
+		var oPolygon = new nhn.api.map.Polygon([
+				new nhn.api.map.LatLng(37.5010226, 127.0296037),
+				new nhn.api.map.LatLng(37.5037226, 127.0315037),
+				new nhn.api.map.LatLng(37.5047226, 127.0335037),
+				new nhn.api.map.LatLng(37.5037226, 127.0385037), ]);
+		oPolygon.setStyle({
+			strokeColor : '#FF0000',
+			strokeStyle : 'solid',
+			fillOpacity : 0.5
+		});
+
+		var oPolyline = new nhn.api.map.Polyline([
+				new nhn.api.map.LatLng(37.4970226, 127.0396037),
+				new nhn.api.map.LatLng(37.4987226, 127.0415037),
+				new nhn.api.map.LatLng(37.4997226, 127.0435037),
+				new nhn.api.map.LatLng(37.5007226, 127.0485037), ]);
+		oPolyline.setStyle({
+			strokeColor : '#FF0000',
+			strokeWidth : 10,
+			strokeOpacity : 1,
+			strokeStyle : 'solid'
+		});
+
+		oMap.addOverlay(oPolygon);
+		oMap.addOverlay(oPolyline);
+
+		var oBicycleGuide = new nhn.api.map.BicycleGuide(); // - 자전거 범례 선언
+		oBicycleGuide.setPosition({
+			top : 10,
+			right : 10
+		}); // - 자전거 범례 위치 지정
+		oMap.addControl(oBicycleGuide);// - 자전거 범례를 지도에 추가.
+
+		var oTrafficGuide = new nhn.api.map.TrafficGuide(); // - 교통 범례 선언
+		oTrafficGuide.setPosition({
+			bottom : 20,
+			left : 10
+		}); // - 교통 범례 위치 지정.
+		oMap.addControl(oTrafficGuide); // - 교통 범례를 지도에 추가.
+	</script>
+</body>
+</html>

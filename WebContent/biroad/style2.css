@@ -430,25 +430,129 @@ hr {
 }
 
 .roadInfo {
-	color : #000000;
+	color: #000000;
 }
+
 .roadDescription {
-	color : #000000;
+	color: #000000;
 }
+
 .roadImage {
-	color : #000000;
+	color: #000000;
 }
-.carousel-control.left, .carousel-control.right {
-    background-image: none
+
+.carousel-control.left,.carousel-control.right {
+	background-image: none
 }
+
 .des {
-	background: url(../image/des.png) no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+	margin-left: 3.1cm;
+}
+
+.inform {
+	margin-left: 10cm;
+	margin-top: 1.7cm;
+}
+
+.carousel-indicators {
+	bottom: 0px;
+	margin-top: 8cm;
+	bottom: 10px;
+	left: 50%;
+	z-index: 15;
+	width: 60%;
+	padding-left: 0;
+	margin-left: -30%;
+	text-align: center;
+	list-style: none;
+}
+
+.rec_select {
+	color: #000;
+	margin-top: 2.5cm;
+	background: url(../image/74.png);
+	opacity: 0.8;
+	filter: alpha(opacity = 80);
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 10px;
+}
+
+.rec_show {
+	color: #000;
+	margin-top: 2.5cm;
+	background: url(../image/74.png);
+	opacity: 0.8;
+	filter: alpha(opacity = 80);
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 10px;
+}
+
+.search_btn {
+	margin-top: 0.7cm;
+}
+
+.rating {
+	overflow: hidden;
+	display: inline-block;
+	font-size: 0;
 	position: relative;
-	
+}
+
+.rating-input {
+	float: right;
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	margin: 0 0 0 -16px;
+	opacity: 0;
+}
+
+.rating:hover .rating-star:hover,.rating:hover .rating-star:hover ~ .rating-star,.rating-input:checked ~ .rating-star {
+	background-position: 0 0;
+}
+
+.rating-star,.rating:hover .rating-star {
+	position: relative;
+	float: right;
+	display: block;
+	width: 16px;
+	height: 16px;
+	background: url('http://kubyshkin.ru/samples/star-rating/star.png') 0 -16px;
+}
+
+.rec_content {
+	margin-top: 0.3cm;
+	min-height: 300px;
+	background: white;
+}
+
+.rec_go {
+	margin-top: 4cm;
+}
+
+.chosen-single {
+    border-color: rgba(82, 168, 236, .8);
+    outline: 0;
+    outline: thin dotted \9;
+    -moz-box-shadow: 0 0 8px rgba(82, 168, 236, .6);
+    box-shadow: 0 0 8px rgba(82, 168, 236, .6)
+}
+.chosen-container-single .chosen-single span {
+    padding-top: 2px;
+}
+.chosen-container-single .chosen-single div b {
+    margin-top: 2px;
+}
+
+.bigRoadBtn {
+	margin-left : 9.4cm;
+	margin-top : 0.3cm;
+}
+
+.input-group-addon {
+	border: 0 none;
 }
 
 /**********************************************************************/

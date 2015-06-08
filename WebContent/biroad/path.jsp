@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="java.util.*,java.sql.*,member.*, board.*"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="java.util.*,java.sql.*,member.*,totalpath.*,path.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,20 +13,24 @@
 <link href="style2.css" rel="stylesheet">
 
 <jsp:useBean id="Member" class="member.Member" />
-<jsp:useBean id="Board" class="board.Board" />
+<jsp:useBean id="TotalPath" class="totalpath.TotalPath" />
+<jsp:useBean id="Path" class="path.Path" />
+
 
 <%
 	Member mem = (Member) session.getAttribute("member");
-
-	BoardBean dao = new BoardBean();
-	ArrayList<Board> list = new ArrayList<Board>();
-	ArrayList<Board> reqlist = ((ArrayList<Board>)request.getAttribute("list"));
-	if(reqlist == null) {
-		list = dao.getBoardDBList5();
-	} else {
-		list = reqlist;
+	Path path = (Path) request.getAttribute("path");
+	String tPathName = (String) request.getAttribute("tPathName");
+	String tPathId = (String) request.getAttribute("tPathId");
+	
+	PathBean dao = new PathBean();
+	ArrayList<Path> list = new ArrayList<Path>();
+	ArrayList<Path> reqlist = (ArrayList<Path>)request.getAttribute("list");;
+	if(reqlist==null){
+		list = dao.getPDBList(tPathId);
+	}else{
+		list = reqlist;	
 	}
-	Board.setBoardRoad("세제자전거길");
 %>
 
 </head>
@@ -41,7 +45,7 @@
 				<ul class="nav1">
 					<li><a href="main.jsp">도로검색</a></li>
 					<li><a href="recommend.jsp">도로추천</a></li>
-					<li><a href="#">BI STORY</a></li>
+					<li><a href="bistory.jsp">BI STORY</a></li>
 					<li><a href="inform.jsp">서비스소개</a></li>
 				</ul>
 				<!-- script-for-menu -->
@@ -218,111 +222,138 @@
 	</div>
 
 	<div class="banner">
-		<div class="container">
-			<div class="row-fluid">
-				<div class="nav-tab">
-					<div class="col-md-1">
-						<div class="writeBoard">
-							<div class="row">
-								<form action="biroad_control.jsp" id="write">
-									<input type=hidden name="action" value="write"> <input TYPE="IMAGE" src="../image/write.png" width="50" height="50" name="Submit"
-										value="Submit" align="absmiddle">
-									<%-- 										<input type=hidden name="memberId" value="<%=mem.getMemberId()%>">
- --%>
-									<input type=hidden name="memberId" value="<%=mem.getMemberId()%>"> <input type=hidden name="boardRoad"
-										value="<%=Board.getBoardRoad()%>">
-								</form>
-							</div>
-							<div class="row">
-								<p>글쓰기</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-10">
-						<div class="tab">
-							<ul class="nav nav-tabs">
-								<li role="presentation"><a href="bistory.jsp">아라<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory2.jsp">한강종주<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory3.jsp">남한강<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory4.jsp">북한강<br>자전거길
-								</a></li>
-								<li role="presentation" class="active"><a href="#">세제<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory6.jsp">낙동강<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory7.jsp">금강<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory8.jsp">영산강<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory9.jsp">섬진강<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory10.jsp">오천<br>자전거길
-								</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-1"></div>
-				</div>
-			</div>
-
-
+		 <div class="container-fluid">
 			<div class="row">
-				<div class="col-md-1"></div>
-				<div class="col-md-10">
-					<div class="contents">
-
+				<div class="col-md-3">
+					<div class="roadInfo">
 						<div class="row">
+							<h3>
+								&nbsp&nbsp<%=path.getPathName()%></h3>
+						</div>
+						<div class="row">
+							<h3>&nbsp&nbsp<%=tPathName %></h3>
+						</div>
+						<br> <br>
+						<div class="row">
+							&nbsp&nbsp&nbsp
+							<button class="btn btn-default btn-sm">코스</button>
+							&nbsp
+							<%=path.getPathStart()%>
+							~
+							<%=path.getPathEnd()%>
+						</div>
+						<br>
+						<div class="row">
+							&nbsp&nbsp&nbsp
+							<button class="btn btn-default btn-sm">시간</button>
+							&nbsp 약
+							<%=path.getPathHour()%>시간
+						</div>
+						<br>
+						<div class="row">
+							&nbsp&nbsp
+							<button class="btn btn-default btn-sm">난이도</button>
 							<%
-								for(Board board : (ArrayList<Board>)list){
+								String rating = path.getPathDiff();
+																																																if (rating.equals("1")) {
 							%>
-							<div class="col-md-4">
-								<div class="post-pannel post_pannel">
-									<a target="_blank"></a>
-									<div class="post-title">
-										<p>
-											<a href="view.jsp?idx=<%=board.getBoardId()%>"> <strong><%=board.getBoardTitle()%></strong>
-											</a> <span class="sceret"> </span>
-										</p>
-									</div>
-									<div class="post-img" style="background-color: rgb(230, 189, 205);">
-
-										<img src="../upload/<%=board.getImage()%>" width="300" height="140">
-
-									</div>
-									<div class="post-description">
-										<p class="mobile-post-desc">
-											<weak><%=board.getBoardText()%> </weak>
-										</p>
-									</div>
-									<div class="post-bottom-bar">
-										<div class="post-heart-button">
-											<form action="biroad_control.jsp" name=form2 id="writeForm" method="POST" class="form-horizontal">
-												<input type=hidden name="action" value="heart"> <input type=hidden name="boardId" value="<%=board.getBoardId()%>">
-												<div class="heart-box">
-													<button type="submit" class="btn btn-default btn-xs" style="float: left; position: relative;">
-														<i class="glyphicon glyphicon-heart"></i>
-													</button>
-													<span>&nbsp <%=board.getHeart()%></span>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
+							<img src="../image/1star.png" width="160" height="30">
+							<%
+								} else if (rating.equals("2")) {
+							%>
+							<img src="../image/2star.png" width="160" height="30">
+							<%
+								} else if (rating.equals("3")) {
+							%>
+							<img src="../image/3star.png" width="160" height="30">
+							<%
+								} else if (rating.equals("4")) {
+							%>
+							<img src="../image/4star.png" width="160" height="30">
+							<%
+								} else if (rating.equals("5")) {
+							%>
+							<img src="../image/5star.png" width="160" height="30">
 							<%
 								}
 							%>
 						</div>
-
+						<br>	
+						
+						<div class="row">
+							<form action="biroad_control.jsp" method="post">
+								&nbsp&nbsp &nbsp
+								<div class="col-md-2">
+									<button class="btn btn-default btn-sm">테마</button>
+								</div>
+								<div class="col-md-5">
+									<input type="hidden" name="action" value="subPathView"> 
+									<input type="hidden" name="tPathId" value="<%= tPathId %>">
+									<select class="form-control" id="sel1" name="pathId">
+										<%
+											for(Path paths : (ArrayList<Path>)list) {
+										%>
+										<option value="<%=paths.getPathId()%>"><%=paths.getPathName()%></option>
+										<%
+											}
+										%>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<button type="submit" class="btn btn-info">검색</button>
+								</div>
+							</form>
+						</div>
+						
 					</div>
 				</div>
-				<div class="col-md-1"></div>
+				<div class="col-md-3">
+					<div class="roadDescription">
+						<br> <br>
+						<div class="row">
+							<h1><%=path.getPathName()%></h1>
+						</div>
+						<div class="row">
+							<h2><%=tPathName %></h2>
+						</div>
+						<br>
+						<div class="row">
+							<p><%=path.getPathText()%></p>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5 col-md-offset-1">
+					<div class="roadImage">
+						<!-- 지도를 표시할 div 입니다 -->
+						<br>
+						<h2>코스지도</h2>
+						<br>
+						<div id="map" style="width: 80%; height: 300px;"></div>
+
+						<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=44b3d9dc2ecf2d8c7dba2d4faf349c31"></script>
+						<script>
+							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+							mapOption = {
+								center : new daum.maps.LatLng(33.450701,
+										126.570667), // 지도의 중심좌표
+								level : 3
+							// 지도의 확대 레벨
+							};
+
+							// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+							var map = new daum.maps.Map(mapContainer, mapOption);
+						</script>
+
+					</div>
+					<div class="bigRoadBtn">
+						<button type="submit" class="btn btn-primary">새창으로보기</button>
+					</div>
+				</div>
 			</div>
-		</div>
+		</div> 
 	</div>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="../bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript">

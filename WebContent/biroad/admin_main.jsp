@@ -85,6 +85,12 @@
 		case 12 :
 			Context = "admin_Pupdate.jsp";
 			break;
+		case 13 :
+			Context = "admin_boardup.jsp";
+			break;
+		case 14 :
+			Context = "admin_bdel.jsp";
+			break;
 	}
 
 	String action = request.getParameter("action");

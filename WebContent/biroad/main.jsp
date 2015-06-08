@@ -16,8 +16,9 @@
 
 <%
 	Member mem = (Member) session.getAttribute("member");
-/* 	Member member = (Member) request.getAttribute("mem");
- */%>
+	/* 	Member member = (Member) request.getAttribute("mem");
+	 */
+%>
 
 </head>
 <body>
@@ -30,7 +31,7 @@
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">
 					<li><a href="#">도로검색</a></li>
-					<li><a href="#">도로추천</a></li>
+					<li><a href="recommend.jsp">도로추천</a></li>
 					<li><a href="bistory.jsp">BI STORY</a></li>
 					<li><a href="inform.jsp">서비스소개</a></li>
 				</ul>
@@ -137,7 +138,8 @@
 										<div class="col-xs-12">
 											<div class=input-group>
 												<span class="input-group-addon"> <img src="../image/name.png" width="15" height="15">
-												</span> <input type="text" <%-- value="<%=member.getMemberName() %>" --%> name="memberName" class="form-control input-lg" placeholder="홍길동" autocomplete="off">
+												</span> <input type="text" <%-- value="<%=member.getMemberName() %>" --%> name="memberName" class="form-control input-lg" placeholder="홍길동"
+													autocomplete="off">
 											</div>
 										</div>
 									</div>
@@ -145,7 +147,8 @@
 										<div class="col-xs-12">
 											<div class=input-group>
 												<span class="input-group-addon"> <img src="../image/email.png" width="15" height="15">
-												</span> <input type="text" <%-- value="<%=member.getMemberEmail() %>" --%> name="memberEmail" class="form-control input-lg" placeholder="xxx.google.com" autocomplete="off">
+												</span> <input type="text" <%-- value="<%=member.getMemberEmail() %>" --%> name="memberEmail" class="form-control input-lg"
+													placeholder="xxx.google.com" autocomplete="off">
 											</div>
 										</div>
 									</div>
@@ -153,7 +156,8 @@
 										<div class="col-xs-12">
 											<div class=input-group>
 												<span class="input-group-addon"> <img src="../image/gender.png" width="15" height="15">
-												</span> <input type="text" <%-- value="<%=member.getMemberGender() %>" --%> name="memberGender" class="form-control input-lg" placeholder="남 or 여" autocomplete="off">
+												</span> <input type="text" <%-- value="<%=member.getMemberGender() %>" --%> name="memberGender" class="form-control input-lg"
+													placeholder="남 or 여" autocomplete="off">
 											</div>
 										</div>
 									</div>
@@ -161,8 +165,8 @@
 										<div class="col-xs-12">
 											<div class=input-group>
 												<span class="input-group-addon"> <img src="../image/bicycle.png" width="15" height="15">
-												</span> <input type="text" <%-- value="<%=member.getModel() %>" --%> name="model" class="form-control input-lg" placeholder="MTB" autocomplete="off"> <input type=hidden
-													name="isManager">
+												</span> <input type="text" <%-- value="<%=member.getModel() %>" --%> name="model" class="form-control input-lg" placeholder="MTB"
+													autocomplete="off"> <input type=hidden name="isManager">
 											</div>
 										</div>
 									</div>
@@ -211,46 +215,39 @@
 		<div class="road-link">
 			<div class="container-fluid">
 				<div class="row-fluid">
-					<div class="col-md-1 col-md-offset-1">
-						<a href="total_path.jsp"> <img src="../image/2.png" class="img-circle">
-						</a>
-					</div>
-					<div class="col-md-1 ">
-						<a href="#"> <img src="../image/3.png" class="img-circle">
-						</a>
-					</div>
-					<div class="col-md-1 ">
-						<a href="#"> <img src="../image/4.png" class="img-circle">
-						</a>
-					</div>
-					<div class="col-md-1 ">
-						<a href="#"> <img src="../image/5.png" class="img-circle">
-						</a>
-					</div>
-					<div class="col-md-1 ">
-						<a href="#"> <img src="../image/6.png" class="img-circle">
-						</a>
-					</div>
-					<div class="col-md-1 ">
-						<a href="#"> <img src="../image/7.png" class="img-circle">
-						</a>
-					</div>
-					<div class="col-md-1 ">
-						<a href="#"> <img src="../image/8.png" class="img-circle">
-						</a>
-					</div>
-					<div class="col-md-1 ">
-						<a href="#"> <img src="../image/9.png" class="img-circle">
-						</a>
-					</div>
-					<div class="col-md-1 ">
-						<a href="#"> <img src="../image/10.png" class="img-circle">
-						</a>
-					</div>
-					<div class="col-md-1">
-						<a href="#"> <img src="../image/11.png" class="img-circle">
-						</a>
-					</div>
+					<form action="biroad_control.jsp" id="image" method="post" class="form-horizontal">
+						<input type=hidden name="action" value="imageIndex">
+						<div class="col-md-1 col-md-offset-1">
+							<input TYPE="IMAGE" src="../image/2.png" name="index" value="path1">
+						</div>
+						<div class="col-md-1 ">
+							<input TYPE="IMAGE" src="../image/3.png" name="index" value="path2">
+						</div>
+						<div class="col-md-1 ">
+							<input TYPE="IMAGE" src="../image/4.png" name="index" value="path3">
+						</div>
+						<div class="col-md-1 ">
+							<input TYPE="IMAGE" src="../image/5.png" name="index" value="path4">
+						</div>
+						<div class="col-md-1 ">
+							<input TYPE="IMAGE" src="../image/6.png" name="index" value="path5">
+						</div>
+						<div class="col-md-1 ">
+							<input TYPE="IMAGE" src="../image/7.png" name="index" value="path6">
+						</div>
+						<div class="col-md-1 ">
+							<input TYPE="IMAGE" src="../image/8.png" name="index" value="path7">
+						</div>
+						<div class="col-md-1 ">
+							<input TYPE="IMAGE" src="../image/9.png" name="index" value="path8">
+						</div>
+						<div class="col-md-1 ">
+							<input TYPE="IMAGE" src="../image/10.png" name="index" value="path9">
+						</div>
+						<div class="col-md-1">
+							<input TYPE="IMAGE" src="../image/11.png" name="index" value="path10">
+						</div>
+					</form>
 					<div class="col-md-1"></div>
 				</div>
 			</div>
@@ -276,7 +273,8 @@
 				document.form2.memberEmail.focus();
 				exit;
 			}
-			if (document.form2.memberGender.value != "남" && document.form2.memberGender.value != "여") {
+			if (document.form2.memberGender.value != "남"
+					&& document.form2.memberGender.value != "여") {
 				alert("성별 형식이 올바르지 않습니다.");
 				document.form2.memberGender.focus();
 				return;

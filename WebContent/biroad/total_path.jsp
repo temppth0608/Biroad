@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="java.util.*,java.sql.*,member.*"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="java.util.*,java.sql.*,member.*,totalpath.*,path.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,9 +13,22 @@
 <link href="style2.css" rel="stylesheet">
 
 <jsp:useBean id="Member" class="member.Member" />
+<jsp:useBean id="TotalPath" class="totalpath.TotalPath" />
+<jsp:useBean id="Path" class="path.Path" />
+
 
 <%
 	Member mem = (Member) session.getAttribute("member");
+	TotalPath tp = (TotalPath) request.getAttribute("tp");
+	
+	PathBean dao = new PathBean();
+	ArrayList<Path> list = new ArrayList<Path>();
+	ArrayList<Path> reqlist = (ArrayList<Path>)request.getAttribute("list");;
+	if(reqlist==null){
+		list = dao.getPDBList(tp.getTotalPathId());
+	}else{
+		list = reqlist;	
+	}
 %>
 
 </head>
@@ -29,7 +42,7 @@
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">
 					<li><a href="main.jsp">도로검색</a></li>
-					<li><a href="#">도로추천</a></li>
+					<li><a href="recommend.jsp">도로추천</a></li>
 					<li><a href="bistory.jsp">BI STORY</a></li>
 					<li><a href="inform.jsp">서비스소개</a></li>
 				</ul>
@@ -212,39 +225,81 @@
 				<div class="col-md-3">
 					<div class="roadInfo">
 						<div class="row">
-							<h3>&nbsp&nbsp아라 자전거길</h3>
+							<h3>
+								&nbsp&nbsp<%=tp.getTotalPathName()%></h3>
 						</div>
 						<div class="row">
 							<h3>&nbsp&nbsp종주코스정보</h3>
 						</div>
 						<br> <br>
 						<div class="row">
-							&nbsp&nbsp&nbsp<button class="btn btn-default btn-sm">코스</button>
-							&nbsp 팔당댐 ~ 충주댐
+							&nbsp&nbsp&nbsp
+							<button class="btn btn-default btn-sm">코스</button>
+							&nbsp
+							<%=tp.getTotalPathStart()%>
+							~
+							<%=tp.getTotalPathEnd()%>
 						</div>
 						<br>
 						<div class="row">
-							&nbsp&nbsp&nbsp<button class="btn btn-default btn-sm">거리</button>
-							&nbsp 136km
+							&nbsp&nbsp&nbsp
+							<button class="btn btn-default btn-sm">시간</button>
+							&nbsp 약
+							<%=tp.getTotalPathThour()%>시간
 						</div>
 						<br>
 						<div class="row">
-							&nbsp&nbsp&nbsp<button class="btn btn-default btn-sm">시간</button>
-							&nbsp 약 3시간
+							&nbsp&nbsp
+							<button class="btn btn-default btn-sm">난이도</button>
+							<%
+								String rating = tp.getTotalPathAvgd();
+																																																					if (rating.equals("1")) {
+							%>
+							<img src="../image/1star.png" width="160" height="30">
+							<%
+								} else if (rating.equals("2")) {
+							%>
+							<img src="../image/2star.png" width="160" height="30">
+							<%
+								} else if (rating.equals("3")) {
+							%>
+							<img src="../image/3star.png" width="160" height="30">
+							<%
+								} else if (rating.equals("4")) {
+							%>
+							<img src="../image/4star.png" width="160" height="30">
+							<%
+								} else if (rating.equals("5")) {
+							%>
+							<img src="../image/5star.png" width="160" height="30">
+							<%
+								}
+							%>
 						</div>
 						<br>
 						<div class="row">
-						&nbsp&nbsp&nbsp	<button class="btn btn-default btn-sm">난이도</button>
-							&nbsp 난이도 이미지
-						</div>
-						<br>
-						<div class="row">
-						&nbsp&nbsp	&nbsp<button class="btn btn-default btn-sm">테마</button>
-							<select>
-								<option value="추억만들기길">추억만들기길</option>
-								<option value="행복한소풍길">행복한소풍길</option>
-								<option value="생명의노래길">생명의노래길</option>
-							</select>
+							<form action="biroad_control.jsp" method="post">
+								&nbsp&nbsp &nbsp
+								<div class="col-md-2">
+									<button class="btn btn-default btn-sm">테마</button>
+								</div>
+								<div class="col-md-5">
+									<input type="hidden" name="action" value="subPathView"> 
+									<input type="hidden" name="tPathId" value="<%= tp.getTotalPathId() %>">
+									<select class="form-control" id="sel1" name="pathId">
+										<%
+											for(Path path : (ArrayList<Path>)list) {
+										%>
+										<option value="<%=path.getPathId()%>"><%=path.getPathName()%></option>
+										<%
+											}
+										%>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<button type="submit" class="btn btn-info">검색</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -252,16 +307,16 @@
 					<div class="roadDescription">
 						<br> <br>
 						<div class="row">
-							<h1>아라자전거길</h1>
+							<h1><%=tp.getTotalPathName()%></h1>
 						</div>
 						<br>
 						<div class="row">
-							<p>국토종주 자전거길은 ‘위대한 향해의 시작’을 알리는 인천 아라서해갑문에 서 시작된다. 서해와 한강을 연결하는 아래뱃길을 따라 조성된 21km 길이의 아라자전 거길은 아디더들에게 환상의 자전거 길로 불린다.</p>
+							<p><%=tp.getTotalPathText()%></p>
 
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-5 col-md-offset-1">
 					<div class="roadImage">
 						<!-- 지도를 표시할 div 입니다 -->
 						<br>
@@ -283,6 +338,9 @@
 							var map = new daum.maps.Map(mapContainer, mapOption);
 						</script>
 
+					</div>
+					<div class="bigRoadBtn">
+						<button type="submit" class="btn btn-primary">새창으로보기</button>
 					</div>
 				</div>
 			</div>

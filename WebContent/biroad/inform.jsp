@@ -29,7 +29,7 @@
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">
 					<li><a href="main.jsp">도로검색</a></li>
-					<li><a href="#">도로추천</a></li>
+					<li><a href="recommend.jsp">도로추천</a></li>
 					<li><a href="bistory.jsp">BI STORY</a></li>
 					<li><a href="#">서비스소개</a></li>
 				</ul>
@@ -49,7 +49,7 @@
 				<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">
 					<section>
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp
-						<%-- <%=mem.getMemberId() + "님"%> --%>
+						<%=mem.getMemberId() + "님"%>
 					</section>
 				</button>
 
@@ -110,8 +110,8 @@
 												</span>
 												<div class="col-sm-10">
 													<p class="form-control-static">
-														<%-- <input type=hidden name="memberId" value="<%=mem.getMemberId()%>">
-														<%=mem.getMemberId()%></p> --%>
+														<input type=hidden name="memberId" value="<%=mem.getMemberId()%>">
+														<%=mem.getMemberId()%></p>
 												</div>
 											</div>
 										</div>
@@ -217,26 +217,23 @@
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner" role="listbox">
 				<div class="item active">
-					<div align="center">
-						<div class="des">
-						</div>
+					<div class="des">
+						<img src="../image/des.png" width="700" height="400">
 					</div>
 				</div>
 
 				<div class="item">
-					<div align="center">
-						 <img src="../image/index_image.PNG" alt="Chania">
+					<div class="inform">
+						<img src="../image/infrom_image.png" width="700" height="335">
 					</div>
 				</div>
 			</div>
 
 			<!-- Left and right controls -->
-			<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"> 
-				<!-- <span class="glyphicon glyphicon-chevron-left" aria-hidden="true">
+			<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"> <!-- <span class="glyphicon glyphicon-chevron-left" aria-hidden="true">
 				</span> 
 				<span class="sr-only">Previous</span> -->
-			</a> <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"> 
-		<!-- 	<span class="glyphicon glyphicon-chevron-right"
+			</a> <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"> <!-- 	<span class="glyphicon glyphicon-chevron-right"
 				aria-hidden="true"></span> <span class="sr-only">Next</span> -->
 			</a>
 		</div>

@@ -114,7 +114,45 @@ public class PathBean {
 		}
 		return -1;
 	}
+	
+	public ArrayList<Path> getPDBList(String tPathId) { // 세부도로 정보출력
+		connect(); // (리스트 출력)
+		ArrayList<Path> datas = new ArrayList<Path>();
 
+		String sql = "select * from path where tpath_id = '"+tPathId+"' order by PATH_ID asc";
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+
+				Path path = new Path();
+
+				path.setPathId(rs.getString("PATH_ID"));
+				path.setPathName(rs.getString("PATH_NAME"));
+				path.setPathStarX(rs.getString("PATH_STARX"));
+				path.setPathStarY(rs.getString("PATH_STARY"));
+				path.setPathEndX(rs.getString("PATH_ENDX"));
+				path.setPathEndY(rs.getString("PATH_ENDY"));
+				path.setPathStart(rs.getString("PATH_START"));
+				path.setPathEnd(rs.getString("PATH_END"));
+				path.setPathHour(rs.getString("PATH_HOUR"));
+				path.setPathDiff(rs.getString("PATH_DIFF"));
+				path.setTpathId(rs.getString("TPATH_ID"));
+				path.setPathText(rs.getString("PATH_TEXT"));
+				// path.setPathImage(pathImage);
+
+				datas.add(path);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return datas;
+	}
+	
 	public ArrayList<Path> getPDBList() { // 세부도로 정보출력
 		connect(); // (리스트 출력)
 		ArrayList<Path> datas = new ArrayList<Path>();
@@ -152,6 +190,8 @@ public class PathBean {
 		}
 		return datas;
 	}
+	
+	
 
 	public ArrayList<Path> findInfo(String req, int index) { // 도로검색
 		connect();
@@ -286,5 +326,24 @@ public class PathBean {
 
 		}
 		return true;
+	}
+	
+	public String getTotalPathName(String pathId) {
+		
+		connect();
+		String sql = "select TotalPath.TPATH_NAME from TotalPath,Path where Path.Tpath_id = TotalPath.TPATH_ID and Path.PATH_ID = '"+pathId+"'";
+		String retVal = "";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				retVal = rs.getString(1);
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return retVal;
 	}
 }

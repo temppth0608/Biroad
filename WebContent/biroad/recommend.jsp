@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="java.util.*,java.sql.*,member.*, board.*"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="java.util.*,java.sql.*,member.*"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,21 +13,24 @@
 <link href="style2.css" rel="stylesheet">
 
 <jsp:useBean id="Member" class="member.Member" />
-<jsp:useBean id="Board" class="board.Board" />
 
 <%
 	Member mem = (Member) session.getAttribute("member");
-
-	BoardBean dao = new BoardBean();
-	ArrayList<Board> list = new ArrayList<Board>();
-	ArrayList<Board> reqlist = ((ArrayList<Board>)request.getAttribute("list"));
-	if(reqlist == null) {
-		list = dao.getBoardDBList5();
-	} else {
-		list = reqlist;
-	}
-	Board.setBoardRoad("세제자전거길");
 %>
+
+<script type="text/javascript">
+	// place your images in this array
+	var random_images_array = [ 'index_image.PNG', 'main_image' ];
+
+	function getRandomImage(imgAr, path) {
+		path = path || '../image/'; // default path here
+		var num = Math.floor(Math.random() * imgAr.length);
+		var img = imgAr[num];
+		var imgStr = '<img src="' + path + img + '" alt = "" width="140" height="140">';
+		document.write(imgStr);
+		document.close();
+	}
+</script>
 
 </head>
 <body>
@@ -40,8 +43,8 @@
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">
 					<li><a href="main.jsp">도로검색</a></li>
-					<li><a href="recommend.jsp">도로추천</a></li>
-					<li><a href="#">BI STORY</a></li>
+					<li><a href="#">도로추천</a></li>
+					<li><a href="bistory.jsp">BI STORY</a></li>
 					<li><a href="inform.jsp">서비스소개</a></li>
 				</ul>
 				<!-- script-for-menu -->
@@ -191,7 +194,7 @@
 
 								<!-- with form -->
 								<form action="biroad_control.jsp" id="withForm" method="post" class="form-horizontal" style="display: none;">
-									<input type=hidden name="action" value="withdrawal"> <input type=hidden name="memberId" value="<%=mem.getMemberId()%>">
+									<input type=hidden name="action" value="withdrawal"> <input type=hidden name="memberId" value="<%-- <%=mem.getMemberId()%> --%>">
 									<div class="form-group">
 										<div class="col-xs-12">
 											<div class=input-group>
@@ -216,110 +219,95 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-
 	<div class="banner">
 		<div class="container">
-			<div class="row-fluid">
-				<div class="nav-tab">
-					<div class="col-md-1">
-						<div class="writeBoard">
-							<div class="row">
-								<form action="biroad_control.jsp" id="write">
-									<input type=hidden name="action" value="write"> <input TYPE="IMAGE" src="../image/write.png" width="50" height="50" name="Submit"
-										value="Submit" align="absmiddle">
-									<%-- 										<input type=hidden name="memberId" value="<%=mem.getMemberId()%>">
- --%>
-									<input type=hidden name="memberId" value="<%=mem.getMemberId()%>"> <input type=hidden name="boardRoad"
-										value="<%=Board.getBoardRoad()%>">
-								</form>
-							</div>
-							<div class="row">
-								<p>글쓰기</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-10">
-						<div class="tab">
-							<ul class="nav nav-tabs">
-								<li role="presentation"><a href="bistory.jsp">아라<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory2.jsp">한강종주<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory3.jsp">남한강<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory4.jsp">북한강<br>자전거길
-								</a></li>
-								<li role="presentation" class="active"><a href="#">세제<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory6.jsp">낙동강<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory7.jsp">금강<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory8.jsp">영산강<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory9.jsp">섬진강<br>자전거길
-								</a></li>
-								<li role="presentation"><a href="bistory10.jsp">오천<br>자전거길
-								</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-1"></div>
-				</div>
-			</div>
-
-
 			<div class="row">
-				<div class="col-md-1"></div>
-				<div class="col-md-10">
-					<div class="contents">
-
+				<div class="col-md-4">
+					<div class="rec_select">
+						<form action="biroad_control.jsp" name=rec_search id="rec_form" method="post" class="form-horizontal">
+							<input type=hidden name="action" value="search">
+							<div class="row">
+								<h4>지역 선택</h4>
+							</div>
+							<div class="row">
+								<input type="text" name="" class="form-control" placeholder="출발지를 입력하세요..." autocomplete="off">
+							</div>
+							<div class="row">
+								<input type="text" name="" class="form-control" placeholder="도착지를 입력하세요..." autocomplete="off">
+							</div>
+							<div class="row">
+								<h4>난이도 선택</h4>
+							</div>
+							<div class="row">
+								<span class="rating"> <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1"> <label
+									for="rating-input-1-5" class="rating-star"></label> <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+									<label for="rating-input-1-4" class="rating-star"></label> <input type="radio" class="rating-input" id="rating-input-1-3"
+									name="rating-input-1"> <label for="rating-input-1-3" class="rating-star"></label> <input type="radio" class="rating-input"
+									id="rating-input-1-2" name="rating-input-1"> <label for="rating-input-1-2" class="rating-star"></label> <input type="radio"
+									class="rating-input" id="rating-input-1-1" name="rating-input-1"> <label for="rating-input-1-1" class="rating-star"></label>
+								</span>
+							</div>
+							<div class="row">
+								<label for="sel1"><h4>시간선택</h4></label> 
+								<select class="form-control" id="sel1">
+									<option>1시간이내</option>
+									<option>2시간이내</option>
+									<option>3시간이내</option>
+									<option>4시간이내</option>
+									<option>5시간이내</option>
+									<option>6시간이내</option>
+									<option>7시간이내</option>
+									<option>8시간이내</option>
+								</select>
+							</div>
+							<div class="row">
+								<div class="search_btn">
+									<div class="col-md-4"></div>
+									<div class="col-md-4">
+										<input class="btn btn-primary" type="submit" value="조회">
+									</div>
+									<div class="col-md-4"></div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="rec_show">
 						<div class="row">
-							<%
-								for(Board board : (ArrayList<Board>)list){
-							%>
 							<div class="col-md-4">
-								<div class="post-pannel post_pannel">
-									<a target="_blank"></a>
-									<div class="post-title">
-										<p>
-											<a href="view.jsp?idx=<%=board.getBoardId()%>"> <strong><%=board.getBoardTitle()%></strong>
-											</a> <span class="sceret"> </span>
-										</p>
-									</div>
-									<div class="post-img" style="background-color: rgb(230, 189, 205);">
-
-										<img src="../upload/<%=board.getImage()%>" width="300" height="140">
-
-									</div>
-									<div class="post-description">
-										<p class="mobile-post-desc">
-											<weak><%=board.getBoardText()%> </weak>
-										</p>
-									</div>
-									<div class="post-bottom-bar">
-										<div class="post-heart-button">
-											<form action="biroad_control.jsp" name=form2 id="writeForm" method="POST" class="form-horizontal">
-												<input type=hidden name="action" value="heart"> <input type=hidden name="boardId" value="<%=board.getBoardId()%>">
-												<div class="heart-box">
-													<button type="submit" class="btn btn-default btn-xs" style="float: left; position: relative;">
-														<i class="glyphicon glyphicon-heart"></i>
-													</button>
-													<span>&nbsp <%=board.getHeart()%></span>
+								<div class="rec_content">
+									<div class="rec_ran_image">
+										<div align="center">
+											<div class="row">
+												<div class="rec_title">
+													<h3>아라자전거길</h3>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div align="center">
+												<div class="rec_subtitle">
+													<h4>생명의노래길</h4>
+												</div>
+											</div>
+										</div>
+										<div align="center">
+											<form action="biroad_control.jsp" name=form2  method="post" class="form-horizontal">
+												<input type=hidden name="action" value="search_go">
+												<div class="row">
+													<div class="rec_go">
+														<input class="btn btn-success" type="submit" value="Go">
+													</div>
 												</div>
 											</form>
 										</div>
 									</div>
 								</div>
 							</div>
-							<%
-								}
-							%>
 						</div>
-
 					</div>
 				</div>
-				<div class="col-md-1"></div>
 			</div>
 		</div>
 	</div>
