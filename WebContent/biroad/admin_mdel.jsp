@@ -30,14 +30,14 @@
 		<form name=form2 method=post action=biroad_control.jsp>
 			<input type=hidden name="action" value="msel">
 			<div class="row">
-				<div class="col-md-1 col-md-offset-1">
-					<select name="how">
+				<div class="col-md-2 col-md-offset-1">
+					<select class="form-control" id="sel1" name="how">
 						<option value="ID">ID</option>
 						<option value="NAME">NAME</option>
 						<option value="EMAIL">EMAIL</option>
 					</select>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<input type="text" class="form-control" size="20" name="obj">
 				</div>
 				<div class="col-md-1">

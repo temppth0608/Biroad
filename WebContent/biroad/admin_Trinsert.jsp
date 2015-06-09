@@ -1,11 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*,java.sql.*,path.*,path.*"%>
+<!DOCTYPE>
 <html>
 <head>
-<meta charset="utf-8">
-<title>관리자 도로추가</title>
-</head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>BIROAD</title>
+
+<!-- Bootstrap -->
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="style3.css" rel="stylesheet">
+<head>
 <body>
 	<div align="center">
 		<h2>도로추가</h2>
@@ -16,8 +22,7 @@
 			<td>도로이름</td>
 			<td rowspan="18">
 				<div class="map_wrap">
-					<div id="map"
-						style="width: 800px; height: 500px; position: relative; overflow: hidden;"></div>
+					<div id="map" style="width: 800px; height: 500px; position: relative; overflow: hidden;"></div>
 					<div id="menu_wrap" class="bg_white">
 						<div class="option">
 							<p>
@@ -30,11 +35,7 @@
 						<ul id="placesList"></ul>
 						<div id="pagination"></div>
 					</div>
-				</div> <script type="text/javascript"
-					src="//apis.daum.net/maps/maps3.js?apikey=fcb3ae25b4db5e57b25f055332ddeea4&libraries=services"></script>
-
-
-				<script>
+				</div> <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=fcb3ae25b4db5e57b25f055332ddeea4&libraries=services"></script> <script>
 					// 마커를 담을 배열입니다
 					var markers = [];
 
@@ -273,11 +274,9 @@
 			</td>
 		</tr>
 		<form name=form1 method=post action=biroad_control.jsp>
-			<input type=hidden name="action" value="Trinsert"> <input
-				type=hidden name="totalPathId">
+			<input type=hidden name="action" value="Trinsert"> <input type=hidden name="totalPathId">
 			<tr>
-				<td><input type=hidden name="totalPathName"> <select
-					name="TID" id="TID" onchange="comm()">
+				<td><input type=hidden name="totalPathName"> <select name="TID" id="TID" onchange="comm()">
 						<option value="ab2" selected="selected">--선택--</option>
 						<option value="아라자전거길">아라자전거길</option>
 						<option value="한강종주자전거길">한강종주자전거길</option>
@@ -344,11 +343,11 @@
 				<td>도로설명</td>
 				<td><textarea name="totalPathText" cols="100" rows="13"></textarea></td>
 			</tr>
-
 			<tr>
-				<td colspan="2" align=center><input type="button" value="저장"
-					onClick="writeCheck()"><input type="reset" name="a"
-					value="취소"></td>
+			
+				<td colspan="2" align=center>
+				<input class="btn btn-primary" type="button" value="저장" onClick="writeCheck()">&nbsp&nbsp&nbsp
+				<input class="btn btn-primary" type="reset" name="a" value="취소"></td>
 				<script language=JavaScript>
 					function comm() {
 						var abc = document.getElementById("TID").value;
@@ -447,17 +446,19 @@
 				</script>
 	</table>
 	</form>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.js"></script>
 </body>
 
 <style>
-.map_wrap, .map_wrap * {
+.map_wrap,.map_wrap * {
 	margin: 0;
 	padding: 0;
 	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
 	font-size: 12px;
 }
 
-.map_wrap a, .map_wrap a:hover, .map_wrap a:active {
+.map_wrap a,.map_wrap a:hover,.map_wrap a:active {
 	color: #000;
 	text-decoration: none;
 }
@@ -524,7 +525,7 @@
 	margin-top: 4px;
 }
 
-#placesList .item h5, #placesList .item .info {
+#placesList .item h5,#placesList .item .info {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
@@ -540,9 +541,7 @@
 
 #placesList .info .jibun {
 	padding-left: 26px;
-	background:
-		url(http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png)
-		no-repeat;
+	background: url(http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;
 }
 
 #placesList .info .tel {
@@ -555,9 +554,7 @@
 	width: 36px;
 	height: 37px;
 	margin: 10px 0 0 10px;
-	background:
-		url(http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
-		no-repeat;
+	background: url(http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
 }
 
 #placesList .item .marker_1 {

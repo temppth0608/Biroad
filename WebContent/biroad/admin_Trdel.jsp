@@ -29,13 +29,24 @@
 
 		<jsp:useBean id="totalpath" scope="request" class="totalpath.TotalPath" />
 
-		<form name=form2 method=post action=biroad_control.jsp>
-			<input type=hidden name="action" value="TPsel"> <select name="how1">
-				<option value="ID1">ID</option>
-				<option value="NAME">NAME</option>
+		<div class="row">
+			<form name=form2 method=post action=biroad_control.jsp>
+				<input type=hidden name="action" value="TPsel">
+				<div class="col-md-4">
+					<select class="form-control" id="sel1" name="how1">
+						<option value="ID1">ID</option>
+						<option value="NAME">NAME</option>
 
-			</select>&nbsp; <input type="text" size="20" name="obj1"><input type="submit" value="검색">
-		</form>
+					</select>&nbsp;
+				</div>
+				<div class="col-md-6">
+					<input class="form-control" type="text" size="20" name="obj1">
+				</div>
+				<div class="col-md-2">
+					<input class="btn btn-primary" type="submit" value="검색">
+				</div>
+			</form>
+		</div>
 		<br>
 		<form name=form1 method=post action=biroad_control.jsp>
 			<input type=hidden name="action"> <input type=hidden name="id">

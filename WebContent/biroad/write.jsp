@@ -22,7 +22,7 @@
 	String memId = (String) request.getAttribute("member");
 	String boardRoad = (String) request.getAttribute("boardRoad");
 	String fileName = (String) request.getAttribute("fileName");
-	
+
 	DecimalFormat df = new DecimalFormat("00");
 	Calendar currentCalendar = Calendar.getInstance();
 	String strYear = Integer.toString(currentCalendar
@@ -37,9 +37,11 @@
 <body>
 	<div class="header" id="header">
 		<div class="container">
-			<div class="header-logo">
-				<h1>BI ROAD</h1>
-			</div>
+			<a href="main.jsp">
+				<div class="header-logo">
+					<h1>BI ROAD</h1>
+				</div>
+			</a>
 			<div class="top-nav">
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">
@@ -230,17 +232,15 @@
 			<div class="formStruct">
 				<div class="container">
 					<form name="fileForm" name="action" id="fileForm" method="POST" action="fileUpload.jsp" enctype="multipart/form-data">
-					<input type=hidden name="action" value="upload1" >
+						<input type=hidden name="action" value="upload1">
 						<div class="row">
 							<div class="col-md-1">
 								<h5>사진올리기</h5>
 							</div>
 							<div class="col-md-6">
-								<input type="hidden" value="newFile" name="title" id="title"> 
-								<input type=hidden name="boardMemb" value="<%=memId%>"> 
-								<input type=hidden name="boardRoad" value="<%=boardRoad%>"> 
-								<input type="file" name="uploadFile" id="uploadFile"> 
-								<input type="submit" value="등록" class="btn btn-danger">
+								<input type="hidden" value="newFile" name="title" id="title"> <input type=hidden name="boardMemb" value="<%=memId%>"> <input
+									type=hidden name="boardRoad" value="<%=boardRoad%>"> <input type="file" name="uploadFile" id="uploadFile"> <input
+									type="submit" value="등록" class="btn btn-danger">
 							</div>
 							<div class="col-md-5"></div>
 						</div>
@@ -251,8 +251,7 @@
 						<input type=hidden name="action" value="writeBoard">
 						<div class="row">
 
-							<input type=hidden name="boardRoad" value="<%=boardRoad%>"> 
-							<input type=hidden name="image" value="<%=fileName%>">
+							<input type=hidden name="boardRoad" value="<%=boardRoad%>"> <input type=hidden name="image" value="<%=fileName%>">
 							<div class="col-md-1 ">
 								<h5>Category</h5>
 							</div>
@@ -299,7 +298,7 @@
 								<h5>비밀번호</h5>
 							</div>
 							<div class="col-md-6">
-								<input type="password" name="boardPass"placeholder="비밀번호를 입력하세요." class="form-control">
+								<input type="password" name="boardPass" placeholder="비밀번호를 입력하세요." class="form-control">
 							</div>
 							<div class="col-md-5"></div>
 						</div>
@@ -331,18 +330,18 @@
 	<script src="../bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript">
 		function writeCheck() {
-			if(document.form3.boardTitle.value == "") {
+			if (document.form3.boardTitle.value == "") {
 				alert("제목을 입력해주세요");
 				document.form3.boardTitle.focus();
 				return;
-			}else if(document.form3.boardPass.value == "") {
+			} else if (document.form3.boardPass.value == "") {
 				alert("비밀번호를 입력해주세요");
 				document.form3.boardPass.focus();
 				return;
 			}
 			document.form3.submit();
 		}
-	
+
 		function checkfield2() {
 			var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 

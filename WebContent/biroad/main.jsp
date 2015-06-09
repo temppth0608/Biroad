@@ -24,9 +24,11 @@
 <body>
 	<div class="header" id="header">
 		<div class="container">
+			<a href="main.jsp">
 			<div class="header-logo">
 				<h1>BI ROAD</h1>
 			</div>
+			</a>
 			<div class="top-nav">
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">
@@ -212,9 +214,10 @@
 	</div>
 
 	<div class="banner">
-		<div class="road-link">
-			<div class="container-fluid">
+
+		<div class="container-fluid">
 				<div class="row-fluid">
+					<div class="road-link">
 					<form action="biroad_control.jsp" id="image" method="post" class="form-horizontal">
 						<input type=hidden name="action" value="imageIndex">
 						<div class="col-md-1 col-md-offset-1">

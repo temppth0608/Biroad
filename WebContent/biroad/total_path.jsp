@@ -55,9 +55,11 @@
 <body>
 	<div class="header" id="header">
 		<div class="container">
+			<a href="main.jsp">
 			<div class="header-logo">
 				<h1>BI ROAD</h1>
 			</div>
+			</a>
 			<div class="top-nav">
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">
@@ -246,10 +248,11 @@
 				<br><br>
 					<div class="roadInfo">
 						<div class="row">
-							<h3>
-								&nbsp&nbsp<%=tp.getTotalPathName()%></h3>
+							&nbsp&nbsp&nbsp&nbsp<img src="../image/bicycle.png" width="30" height="30">
+							<br>
+							<h3>&nbsp&nbsp<%=tp.getTotalPathName()%></h3>
 						</div>
-						<br><br>
+						<br>
 						<div class="row">
 							<h3>&nbsp&nbsp종주코스정보</h3>
 						</div>

@@ -3,44 +3,43 @@ package totalpath;
 import java.sql.*;
 import java.util.*;
 
-
-
 public class TotalPathBean {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
-	
+
 	Statement st = null;
 	ResultSet rs = null;
-	
+
 	String jdbc_driver = "com.mysql.jdbc.Driver";
 	String jdbc_url = "jdbc:mysql://localhost/biroad2?useUnicode=true&characterEncoding=UTF-8";
-	
-	void connect(){
-		try{
+
+	void connect() {
+		try {
 			Class.forName(jdbc_driver);
-			conn = DriverManager.getConnection(jdbc_url,"root","654321");
-		
-		}catch(Exception e){
+			conn = DriverManager.getConnection(jdbc_url, "root", "654321");
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	void disconnect(){
-		if(pstmt != null){
-			try{
+
+	void disconnect() {
+		if (pstmt != null) {
+			try {
 				pstmt.close();
-			}catch(SQLException e){
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		if(conn != null){
-			try{
+		if (conn != null) {
+			try {
 				conn.close();
-			}catch(SQLException e){
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	public boolean insertTPDB(TotalPath Tpath) {
 		connect();
 
@@ -154,7 +153,7 @@ public class TotalPathBean {
 		String sql = "";
 		if (index == 0) {
 			sql = "select * from totalpath where TPATH_ID like ? order by TPATH_NAME asc";
-		} else if (index == 1){
+		} else if (index == 1) {
 			sql = "select * from totalpath where TPATH_NAME like ? order by TPATH_NAME asc";
 		}
 
@@ -166,7 +165,7 @@ public class TotalPathBean {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				
+
 				TotalPath tpath = new TotalPath();
 
 				tpath.setTotalPathId(rs.getString("TPATH_ID"));
@@ -193,8 +192,8 @@ public class TotalPathBean {
 		return list;
 
 	}
-	
-	public boolean deleteTPDB(String TPATH_ID) {		//전체도로 삭제
+
+	public boolean deleteTPDB(String TPATH_ID) { // 전체도로 삭제
 		connect();
 
 		String sql = "delete from totalpath where TPATH_ID = ?";
@@ -212,11 +211,11 @@ public class TotalPathBean {
 		}
 		return true;
 	}
-	
+
 	public TotalPath getTPDB(String TPATH_ID) { // 도로 한 개 정보 가져오기
 		connect();
 		String sql = "select * from totalpath where TPATH_ID=?";
-		
+
 		TotalPath tpath = new TotalPath();
 
 		try {
@@ -225,7 +224,7 @@ public class TotalPathBean {
 			ResultSet rs = pstmt.executeQuery();
 
 			rs.next();
-			
+
 			tpath.setTotalPathId(rs.getString("TPATH_ID"));
 			tpath.setTotalPathName(rs.getString("TPATH_NAME"));
 			tpath.setTotalPathStarX(rs.getString("TPATH_STARX"));
@@ -247,6 +246,7 @@ public class TotalPathBean {
 		}
 		return tpath;
 	}
+
 	public boolean updateTPathDB(TotalPath tpath) { // 도로 수정
 		connect();
 
@@ -266,7 +266,7 @@ public class TotalPathBean {
 			pstmt.setString(9, tpath.getTotalPathAvgd());
 			pstmt.setString(10, tpath.getTotalPathText());
 			pstmt.setString(11, tpath.getTotalPathId());
-				
+
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -277,5 +277,213 @@ public class TotalPathBean {
 
 		}
 		return true;
+	}
+
+	public ArrayList<TotalPath> recommand(String req, int index) { // 도로추천
+																	// 시작,끝,난이도,시간
+		connect();
+		ArrayList<TotalPath> list = new ArrayList<TotalPath>();
+		String sql = "";
+		if (index == 0) {
+			sql = "select * from totalpath where TPATH_START like ? order by TPATH_NAME asc";
+		} else if (index == 1) {
+			sql = "select * from totalpath where TPATH_END like ? order by TPATH_NAME asc";
+		} else if (index == 2) {
+			sql = "select * from totalpath where TPATH_AVGD like ? order by TPATH_NAME asc";
+		} else if (index == 3) {
+			sql = "select * from totalpath where TPATH_THOUR like ? order by TPATH_NAME asc";
+		}
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			String setReq = "%" + req + "%";
+
+			pstmt.setString(1, setReq);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				TotalPath tpath = new TotalPath();
+
+				tpath.setTotalPathId(rs.getString("TPATH_ID"));
+				tpath.setTotalPathName(rs.getString("TPATH_NAME"));
+				tpath.setTotalPathStarX(rs.getString("TPATH_STARX"));
+				tpath.setTotalPathEndX(rs.getString("TPATH_ENDX"));
+				tpath.setTotalPathStarY(rs.getString("TPATH_STARY"));
+				tpath.setTotalPathEndY(rs.getString("TPATH_ENDY"));
+				tpath.setTotalPathStart(rs.getString("TPATH_START"));
+				tpath.setTotalPathEnd(rs.getString("TPATH_END"));
+				tpath.setTotalPathThour(rs.getString("TPATH_THOUR"));
+				tpath.setTotalPathAvgd(rs.getString("TPATH_AVGD"));
+				tpath.setTotalPathText(rs.getString("TPATH_TEXT"));
+
+				list.add(tpath);
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+
+	}
+
+	public ArrayList<TotalPath> recommand2(String req, String req2, int index) { // 도로검색
+		connect();
+		ArrayList<TotalPath> list = new ArrayList<TotalPath>();
+		String sql = "";
+		if (index == 0) {
+			sql = "select * from totalpath where TPATH_START like ? and TPATH_END like ? order by TPATH_NAME asc";
+		} else if (index == 1) {
+			sql = "select * from totalpath where TPATH_START like ? and TPATH_AVGD like ? order by TPATH_NAME asc";
+		} else if (index == 2) {
+			sql = "select * from totalpath where TPATH_START like ? and TPATH_THOUR like ? order by TPATH_NAME asc";
+		} else if (index == 3) {
+			sql = "select * from totalpath where TPATH_END like ? and TPATH_AVGD like ? order by TPATH_NAME asc";
+		} else if (index == 4) {
+			sql = "select * from totalpath where TPATH_END like ? and TPATH_THOUR like ? order by TPATH_NAME asc";
+		} else if (index == 5) {
+			sql = "select * from totalpath where TPATH_AVGD like ? and TPATH_THOUR like ? order by TPATH_NAME asc";
+		}
+		try {
+			pstmt = conn.prepareStatement(sql);
+			String setReq = "%" + req + "%";
+			String setReq2 = "%" + req2 + "%";
+
+			pstmt.setString(1, setReq);
+			pstmt.setString(2, setReq2);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				TotalPath tpath = new TotalPath();
+
+				tpath.setTotalPathId(rs.getString("TPATH_ID"));
+				tpath.setTotalPathName(rs.getString("TPATH_NAME"));
+				tpath.setTotalPathStarX(rs.getString("TPATH_STARX"));
+				tpath.setTotalPathEndX(rs.getString("TPATH_ENDX"));
+				tpath.setTotalPathStarY(rs.getString("TPATH_STARY"));
+				tpath.setTotalPathEndY(rs.getString("TPATH_ENDY"));
+				tpath.setTotalPathStart(rs.getString("TPATH_START"));
+				tpath.setTotalPathEnd(rs.getString("TPATH_END"));
+				tpath.setTotalPathThour(rs.getString("TPATH_THOUR"));
+				tpath.setTotalPathAvgd(rs.getString("TPATH_AVGD"));
+				tpath.setTotalPathText(rs.getString("TPATH_TEXT"));
+
+				list.add(tpath);
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+
+	}
+
+	public ArrayList<TotalPath> recommand3(String req, String req2,
+			String req3, int index) { // 도로검색
+		connect();
+		ArrayList<TotalPath> list = new ArrayList<TotalPath>();
+		String sql = "";
+		if (index == 0) {
+			sql = "select * from totalpath where TPATH_START like ? and TPATH_END like ? and TPATH_AVGD like ?order by TPATH_NAME asc";
+		} else if (index == 1) {
+			sql = "select * from totalpath where TPATH_START like ? and TPATH_END like ? and TPATH_THOUR like ?order by TPATH_NAME asc";
+		} else if (index == 2) {
+			sql = "select * from totalpath where TPATH_START like ? and TPATH_AVGD like ? and TPATH_THOUR like ?order by TPATH_NAME asc";
+		} else if (index == 3) {
+			sql = "select * from totalpath where TPATH_END like ? and TPATH_AVGD like ? and TPATH_THOUR like ?order by TPATH_NAME asc";
+		}
+		try {
+			pstmt = conn.prepareStatement(sql);
+			String setReq = "%" + req + "%";
+			String setReq2 = "%" + req2 + "%";
+			String setReq3 = "%" + req3 + "%";
+
+			pstmt.setString(1, setReq);
+			pstmt.setString(2, setReq2);
+			pstmt.setString(3, setReq3);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				TotalPath tpath = new TotalPath();
+
+				tpath.setTotalPathId(rs.getString("TPATH_ID"));
+				tpath.setTotalPathName(rs.getString("TPATH_NAME"));
+				tpath.setTotalPathStarX(rs.getString("TPATH_STARX"));
+				tpath.setTotalPathEndX(rs.getString("TPATH_ENDX"));
+				tpath.setTotalPathStarY(rs.getString("TPATH_STARY"));
+				tpath.setTotalPathEndY(rs.getString("TPATH_ENDY"));
+				tpath.setTotalPathStart(rs.getString("TPATH_START"));
+				tpath.setTotalPathEnd(rs.getString("TPATH_END"));
+				tpath.setTotalPathThour(rs.getString("TPATH_THOUR"));
+				tpath.setTotalPathAvgd(rs.getString("TPATH_AVGD"));
+				tpath.setTotalPathText(rs.getString("TPATH_TEXT"));
+
+				list.add(tpath);
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+
+	}
+
+	public ArrayList<TotalPath> recommand4(String req, String req2,
+			String req3, String req4) { // 도로검색
+		connect();
+		ArrayList<TotalPath> list = new ArrayList<TotalPath>();
+		String sql = "";
+		sql = "select * from totalpath where TPATH_START like ? and TPATH_END like ? and TPATH_AVGD like ? and TPATH_THOUR like ? order by TPATH_NAME asc";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			String setReq = "%" + req + "%";
+			String setReq2 = "%" + req2 + "%";
+			String setReq3 = "%" + req3 + "%";
+			String setReq4 = "%" + req4 + "%";
+			pstmt.setString(1, setReq);
+			pstmt.setString(2, setReq2);
+			pstmt.setString(3, setReq3);
+			pstmt.setString(4, setReq4);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				TotalPath tpath = new TotalPath();
+
+				tpath.setTotalPathId(rs.getString("TPATH_ID"));
+				tpath.setTotalPathName(rs.getString("TPATH_NAME"));
+				tpath.setTotalPathStarX(rs.getString("TPATH_STARX"));
+				tpath.setTotalPathEndX(rs.getString("TPATH_ENDX"));
+				tpath.setTotalPathStarY(rs.getString("TPATH_STARY"));
+				tpath.setTotalPathEndY(rs.getString("TPATH_ENDY"));
+				tpath.setTotalPathStart(rs.getString("TPATH_START"));
+				tpath.setTotalPathEnd(rs.getString("TPATH_END"));
+				tpath.setTotalPathThour(rs.getString("TPATH_THOUR"));
+				tpath.setTotalPathAvgd(rs.getString("TPATH_AVGD"));
+				tpath.setTotalPathText(rs.getString("TPATH_TEXT"));
+
+				list.add(tpath);
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+
 	}
 }

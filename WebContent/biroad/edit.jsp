@@ -43,9 +43,11 @@
 <body>
 	<div class="header" id="header">
 		<div class="container">
+			<a href="main.jsp">
 			<div class="header-logo">
 				<h1>BI ROAD</h1>
 			</div>
+			</a>
 			<div class="top-nav">
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">

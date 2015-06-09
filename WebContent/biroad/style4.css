@@ -1,6 +1,11 @@
 @CHARSET "UTF-8";
 
-
+/*--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+--*/
 body {
 	margin: 0;
 	font-family: 'Open Sans', sans-serif;
@@ -422,7 +427,6 @@ hr {
 	background-color: #d3d3d3;
 	border-bottom-right-radius: 3px;
 	border-bottom-left-radius: 3px;
-	overflow: scroll;
 }
 
 .roadInfo {
@@ -467,26 +471,22 @@ hr {
 	color: #000;
 	margin-top: 2.5cm;
 	background: url(../image/74.png);
-	opacity: 0.95;
-	filter: alpha(opacity = 90);
+	opacity: 0.8;
+	filter: alpha(opacity = 80);
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-bottom: 10px;
-	
 }
 
 .rec_show {
 	color: #000;
 	margin-top: 2.5cm;
 	background: url(../image/74.png);
-	opacity: 0.95;
-	filter: alpha(opacity = 95);
+	opacity: 0.8;
+	filter: alpha(opacity = 80);
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-bottom: 10px;
-	width: 800px;
-	height: 390px;
-	overflow-x: scroll;
 }
 
 .search_btn {
@@ -526,7 +526,6 @@ hr {
 	margin-top: 0.3cm;
 	min-height: 300px;
 	background: white;
-	
 }
 
 .rec_go {

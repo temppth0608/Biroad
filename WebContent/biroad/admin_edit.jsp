@@ -52,7 +52,7 @@
 						<div class="col-xs-12">
 							<div class=input-group>
 								<span class="input-group-addon"> <img src="../image/key.png" width="15" height="15">
-								</span> <input value="<%=member.getMemberPass()%>" type="password" name="memberPass" class="form-control input-lg" placeholder="Password"
+								</span> <input value="<%=member.getMemberPass()%>" type="text" name="memberPass" class="form-control input-lg" placeholder="Password"
 									autocomplete="off">
 							</div>
 						</div>

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*,java.sql.*,path.*,path.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*,java.sql.*,path.*,path.*"%>
 <!DOCTYPE>
 <html>
 <head>
@@ -28,22 +27,30 @@
 		<h2>세부도로 삭제</h2>
 		<hr>
 
-		<jsp:useBean id="path" scope="request"
-			class="path.Path" />
+		<jsp:useBean id="path" scope="request" class="path.Path" />
 
-		<form name=form2 method=post action=biroad_control.jsp>
-			<input type=hidden name="action" value="Psel"> <select
-				name="how1">
-				<option value="ID1">ID</option>
-				<option value="NAME">NAME</option>
+		<div class="row">
+			<form name=form2 method=post action=biroad_control.jsp>
+				<input type=hidden name="action" value="Psel">
+				<div class="col-md-4">
+					<select class="form-control" id="sel1" name="how1">
+						<option value="ID1">ID</option>
+						<option value="NAME">NAME</option>
 
-			</select>&nbsp; <input type="text" size="20" name="obj1"><input
-				type="submit" value="검색">
-		</form>
+					</select>&nbsp;
+				</div>
+				<div class="col-md-6">
+					<input class="form-control" type="text" size="20" name="obj1">
+				</div>
+				<div class="col-md-2">
+					<input class="btn btn-primary" type="submit" value="검색">
+				</div>
+			</form>
+		</div>
+
 		<br>
 		<form name=form1 method=post action=biroad_control.jsp>
-			<input type=hidden name="action"> <input type=hidden
-				name="id">
+			<input type=hidden name="action"> <input type=hidden name="id">
 			<table class="table table-striped">
 				<tr>
 					<th>ID</th>
@@ -64,8 +71,7 @@
 					<td><%=pa.getPathEnd()%></td>
 					<td><a href="javascript:go('<%=pa.getPathId()%>')">경로확인</a></td>
 
-					<td><a href="javascript:delcheck('<%=pa.getPathId()%>')">삭제</a>
-					</td>
+					<td><a href="javascript:delcheck('<%=pa.getPathId()%>')">삭제</a></td>
 				</tr>
 				<%
 					}

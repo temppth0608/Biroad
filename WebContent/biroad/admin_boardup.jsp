@@ -32,20 +32,20 @@
 		<form name=form2 method=post action=biroad_control.jsp>
 			<input type=hidden name="action" value="bsel">
 			<div class="row">
-				<div class="col-md-1 col-md-offset-1">
-					<select name="how">
+				<div class="col-md-3">
+					<select class="form-control" id="sel1" name="how">
 						<option value="ID">사용자</option>
 						<option value="ROAD">길</option>
 						<option value="TITLE">제목</option>
 					</select>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-6">
 					<input type="text" class="form-control" size="20" name="obj">
 				</div>
-				<div class="col-md-1">
+				<div class="col-md-2">
 					<input class="btn btn-primary" type="submit" value="검색">
 				</div>
-				<div class="col-md-2"></div>
+				<div class="col-md-1"></div>
 			</div>
 		</form>
 		<br>
@@ -62,7 +62,6 @@
 							<th>날짜</th>
 							<th>좋아요</th>
 							<th>&nbsp</th>
-							<th>&nbsp</th>
 						</tr>
 
 						<%
@@ -77,7 +76,7 @@
 							<td><%=bo.getHeart()%></td>
 
 							<td><input type="button" value="수정"
-					onClick="delcheck('<%=bo.getBoardId()%>')" class="btn btn-danger"></td>
+					onClick="delcheck('<%=bo.getBoardId()%>')" class="btn btn-warning"></td>
 						</tr>
 						<%
 							}

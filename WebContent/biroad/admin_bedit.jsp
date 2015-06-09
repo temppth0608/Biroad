@@ -41,7 +41,7 @@
 					<div class="form-group">
 						<div class="col-xs-12">
 							<div class=input-group>
-								<span class="input-group-addon"> <img src="../image/user.png" width="15" height="15">&nbsp 도로&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+								<span class="input-group-addon"> <img src="../image/bicycle.png" width="15" height="15">&nbsp 도로&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 								</span>
 								
 								<p class="form-control-static">&nbsp&nbsp	<%=board.getBoardRoad()%></p>
@@ -78,7 +78,7 @@
 					<div class="form-group">
 						<div class="col-xs-12">
 							<div class=input-group>
-								<span class="input-group-addon"> <img src="../image/email.png" width="15" height="15">&nbsp 내용&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+								<span class="input-group-addon"> <img src="../image/pencil.png" width="15" height="15">&nbsp 내용&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 								</span>
 								<textarea name="boardText" class="form-control" rows="13"><%=board.getBoardText()%></textarea>
 							</div>
@@ -87,7 +87,7 @@
 					<div class="form-group">
 						<div class="col-xs-12">
 							<div class=input-group>
-								<span class="input-group-addon"> <img src="../image/gender.png" width="15" height="15">&nbsp 날짜&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+								<span class="input-group-addon"> <img src="../image/view_calander.png" width="15" height="15">&nbsp 날짜&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 								</span> <input value="<%=board.getBoardDate()%>" type="text" name="boardDate" class="form-control input-lg" placeholder="남 or 여" autocomplete="off">
 							</div>
 						</div>

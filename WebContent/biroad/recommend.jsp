@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="java.util.*,java.sql.*,member.*"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="java.util.*,java.sql.*,member.*,totalpath.*,path.*"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,27 +18,15 @@
 	Member mem = (Member) session.getAttribute("member");
 %>
 
-<script type="text/javascript">
-	// place your images in this array
-	var random_images_array = [ 'index_image.PNG', 'main_image' ];
-
-	function getRandomImage(imgAr, path) {
-		path = path || '../image/'; // default path here
-		var num = Math.floor(Math.random() * imgAr.length);
-		var img = imgAr[num];
-		var imgStr = '<img src="' + path + img + '" alt = "" width="140" height="140">';
-		document.write(imgStr);
-		document.close();
-	}
-</script>
-
 </head>
 <body>
 	<div class="header" id="header">
 		<div class="container">
+			<a href="main.jsp">
 			<div class="header-logo">
 				<h1>BI ROAD</h1>
 			</div>
+			</a>
 			<div class="top-nav">
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">
@@ -224,41 +212,48 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="rec_select">
-						<form action="biroad_control.jsp" name=rec_search id="rec_form" method="post" class="form-horizontal">
-							<input type=hidden name="action" value="search">
+						<form action="biroad_control.jsp" name="rec_search" id="rec_search" method="post" class="form-horizontal">
+							<input type=hidden name="action" value="recommand">
+							<div class="row">
+								<h4>도로 종류 선택</h4>
+							</div>
+							<div class="row">
+								<select class="form-control" id="sel1" name="category">
+									<option value="1">국토종주 자전거길</option>
+									<option value="2">테마길</option>
+								</select>
+							</div>
 							<div class="row">
 								<h4>지역 선택</h4>
 							</div>
 							<div class="row">
-								<input type="text" name="" class="form-control" placeholder="출발지를 입력하세요..." autocomplete="off">
-							</div>
+								<input type="text" name="Start" class="form-control" placeholder="출발지를 입력하세요..." autocomplete="off">
+							</div> 	
 							<div class="row">
-								<input type="text" name="" class="form-control" placeholder="도착지를 입력하세요..." autocomplete="off">
+								<input type="text" name="End" class="form-control" placeholder="도착지를 입력하세요..." autocomplete="off">
 							</div>
 							<div class="row">
 								<h4>난이도 선택</h4>
 							</div>
 							<div class="row">
-								<span class="rating"> <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1"> <label
-									for="rating-input-1-5" class="rating-star"></label> <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
-									<label for="rating-input-1-4" class="rating-star"></label> <input type="radio" class="rating-input" id="rating-input-1-3"
-									name="rating-input-1"> <label for="rating-input-1-3" class="rating-star"></label> <input type="radio" class="rating-input"
-									id="rating-input-1-2" name="rating-input-1"> <label for="rating-input-1-2" class="rating-star"></label> <input type="radio"
-									class="rating-input" id="rating-input-1-1" name="rating-input-1"> <label for="rating-input-1-1" class="rating-star"></label>
+								<span class="rating"> 
+								<input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1" value="5"> 
+									<label for="rating-input-1-5" class="rating-star"> </label> 
+								<input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1" value="4"> 
+									<label for="rating-input-1-4" class="rating-star"></label> 
+								<input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1" value="3"> 
+									<label for="rating-input-1-3" class="rating-star"></label> 
+								<input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1" value="2"> 
+									<label for="rating-input-1-2" class="rating-star"></label> 
+								<input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1" value="1"> 
+									<label for="rating-input-1-1" class="rating-star"></label>
 								</span>
 							</div>
 							<div class="row">
-								<label for="sel1"><h4>시간선택</h4></label> 
-								<select class="form-control" id="sel1">
-									<option>1시간이내</option>
-									<option>2시간이내</option>
-									<option>3시간이내</option>
-									<option>4시간이내</option>
-									<option>5시간이내</option>
-									<option>6시간이내</option>
-									<option>7시간이내</option>
-									<option>8시간이내</option>
-								</select>
+								<h4>시간 선택</h4>
+							</div>
+							<div class="row">
+								<input type="text" name="Time" class="form-control" placeholder="2 (2시간일경우).." autocomplete="off">
 							</div>
 							<div class="row">
 								<div class="search_btn">
@@ -275,35 +270,9 @@
 				<div class="col-md-8">
 					<div class="rec_show">
 						<div class="row">
+
 							<div class="col-md-4">
-								<div class="rec_content">
-									<div class="rec_ran_image">
-										<div align="center">
-											<div class="row">
-												<div class="rec_title">
-													<h3>아라자전거길</h3>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div align="center">
-												<div class="rec_subtitle">
-													<h4>생명의노래길</h4>
-												</div>
-											</div>
-										</div>
-										<div align="center">
-											<form action="biroad_control.jsp" name=form2  method="post" class="form-horizontal">
-												<input type=hidden name="action" value="search_go">
-												<div class="row">
-													<div class="rec_go">
-														<input class="btn btn-success" type="submit" value="Go">
-													</div>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -314,6 +283,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="../bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript">
+	
 		function checkfield2() {
 			var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 

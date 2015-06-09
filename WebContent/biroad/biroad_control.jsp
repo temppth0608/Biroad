@@ -478,6 +478,142 @@
 		Board bo = board.getBDB(ab);
 		request.setAttribute("board", bo);
 		pageContext.forward("admin_content.jsp");
+		
+	} else if (action.equals("recommand")) {
+		
+		int index = 0;
+		String start = null;
+		String end = null;
+		String diff = null;
+		String time = null;
+		String req = null;
+		String req2 = null;
+		String req3 = null;
+		String req4 = null;
+		String category = null;
+		
+		start = (String) request.getParameter("Start");
+		end = (String) request.getParameter("End");
+		diff = (String) request.getParameter("rating-input-1");
+		time = (String) request.getParameter("Time");
+		category = (String) request.getParameter("category");
+		
+		if(diff == null) {
+			out.println("<script>alert('난이도를 선택해주세요!.');history.go(-1);</script>");
+		}
+		
+		if ((start==null && end == null && diff == null) || (start==null && end==null && time==null) || 
+				(start==null && diff==null && time==null) || (diff==null && end==null && time==null) ){
+			if(start != null){
+				index = 0;
+				req = start;
+			}else if (end != null){
+				index = 1;
+				req = end;
+			}else if (diff != null){
+				index = 2;
+				req = diff;
+			}else{
+				index = 3;
+				req = time;
+			}
+			
+			if (category.equals("1")) {
+				ArrayList<TotalPath> list = totalpath.recommand(req, index);
+				request.setAttribute("list", list);
+				pageContext.forward("recommendShow.jsp");
+			} else if (category.equals("2")) {
+				ArrayList<Path> plist = path.recommand(req, index);
+				request.setAttribute("plist", plist);
+				pageContext.forward("recommendShow2.jsp");
+			}
+			
+		} else if ((start==null && end == null) || (start==null && time==null) || (start==null && diff==null) || (end==null && time==null)
+				|| (end==null && diff==null) || (diff==null && time==null)){
+			if((start != null) && (end != null)){
+				index = 0;
+				req = start;
+				req2 = end;
+			}else if ((start != null) && (diff != null)){
+				index = 1;
+				req = start;
+				req2 = diff;
+			}else if ((start != null) && (time != null)){
+				index = 2;
+				req = start;
+				req2 = time;
+			}else if ((end != null) && (diff != null)){
+				index = 3;
+				req = end;
+				req2 = diff;
+			}else if ((end != null) && (time != null)){
+				index = 4;
+				req = end;
+				req2 = time;
+			}else if ((diff != null) && (time != null)){
+				index = 5;
+				req = diff;
+				req2 = time;
+			}
+			
+			if (category.equals("1")) {
+				ArrayList<TotalPath> list = totalpath.recommand2(req, req2,index);
+				request.setAttribute("list", list);
+				pageContext.forward("recommendShow.jsp");
+			} else if (category.equals("2")) {
+				ArrayList<Path> plist = path.recommand2(req,req2 ,index);
+				request.setAttribute("plist", plist);
+				pageContext.forward("recommendShow2.jsp");
+			}
+			
+		}else if ((start==null)&&(end==null)&&(diff==null)&&(time==null)){
+			if(time == null){
+				index = 0;
+				req = start;
+				req2 = end;
+				req3 = diff;
+			} else if(diff == null) {
+				index = 1;
+				req = start;
+				req2 = end;
+				req3 = time;
+			} else if(end == null) {
+				index = 2;
+				req = start;
+				req2 = diff;
+				req3 = time;
+			} else if(start == null) {
+				index = 3;
+				req = end;
+				req2 = diff;
+				req3 = time;
+			}
+			if (category.equals("1")) {
+				ArrayList<TotalPath> list = totalpath.recommand3(req,req2,req3, index);
+				request.setAttribute("list", list);
+				pageContext.forward("recommendShow.jsp");
+			} else if (category.equals("2")) {
+				ArrayList<Path> plist = path.recommand3(req,req2,req3, index);
+				request.setAttribute("plist", plist);
+				pageContext.forward("recommendShow2.jsp");
+			}
+			
+		}else if(start != null && end != null && diff != null && time !=null){
+			req = start;
+			req2 = end;
+			req3 = diff;
+			req4 = time;
+			
+			if (category.equals("1")) {
+				ArrayList<TotalPath> list = totalpath.recommand4(req, req2, req3, req4);
+				request.setAttribute("list", list);
+				pageContext.forward("recommendShow.jsp");
+			} else if (category.equals("2")) {
+				ArrayList<Path> plist = path.recommand4(req, req2, req3, req4);
+				request.setAttribute("plist", plist);
+				pageContext.forward("recommendShow2.jsp");
+			}
+		} 
 	}
  	
 	 /*if (board.updateBoardDB(Board.getBoardId(),

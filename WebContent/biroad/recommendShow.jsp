@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="java.util.*,java.sql.*,member.*"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="java.util.*,java.sql.*,member.*,totalpath.*,path.*"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +16,13 @@
 
 <%
 	Member mem = (Member) session.getAttribute("member");
+
+	TotalPathBean dao = new TotalPathBean();
+	ArrayList<TotalPath> list = new ArrayList<TotalPath>();
+	ArrayList<TotalPath> reqlist = (ArrayList<TotalPath>)request.getAttribute("list");
+	
+		list = reqlist;	
+	
 %>
 
 </head>
@@ -31,9 +38,9 @@
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
 				<ul class="nav1">
 					<li><a href="main.jsp">도로검색</a></li>
-					<li><a href="recommend.jsp">도로추천</a></li>
+					<li><a href="#">도로추천</a></li>
 					<li><a href="bistory.jsp">BI STORY</a></li>
-					<li><a href="#">서비스소개</a></li>
+					<li><a href="inform.jsp">서비스소개</a></li>
 				</ul>
 				<!-- script-for-menu -->
 				<script>
@@ -208,44 +215,113 @@
 		<div class="clearfix"></div>
 	</div>
 	<div class="banner">
-
-		<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-			<!-- Indicators -->
-			<ol class="carousel-indicators">
-				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-				<li data-target="#myCarousel" data-slide-to="1"></li>
-			</ol>
-
-			<!-- Wrapper for slides -->
-			<div class="carousel-inner" role="listbox">
-				<div class="item active">
-					<div class="des">
-						<img src="../image/des.png" width="700" height="400">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="rec_select">
+						<form action="biroad_control.jsp" name=rec_search id="rec_form" method="post" class="form-horizontal">
+							<input type=hidden name="action" value="recommand">
+							<div class="row">
+								<h4>도로 종류 선택</h4>
+							</div>
+							<div class="row">
+								<select class="form-control" id="sel1" name="category">
+									<option value="1">국토종주 자전거길</option>
+									<option value="2">테마길</option>
+								</select>
+							</div>
+							<div class="row">
+								<h4>지역 선택</h4>
+							</div>
+							<div class="row">
+								<input type="text" name="Start" class="form-control" placeholder="출발지를 입력하세요..." autocomplete="off">
+							</div>
+							<div class="row">
+								<input type="text" name="End" class="form-control" placeholder="도착지를 입력하세요..." autocomplete="off">
+							</div>
+							<div class="row">
+								<h4>난이도 선택</h4>
+							</div>
+							<div class="row">
+								<span class="rating"> <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1" value="5"> <label
+									for="rating-input-1-5" class="rating-star"> </label> <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1"
+									value="4"> <label for="rating-input-1-4" class="rating-star"></label> <input type="radio" class="rating-input" id="rating-input-1-3"
+									name="rating-input-1" value="3"> <label for="rating-input-1-3" class="rating-star"></label> <input type="radio" class="rating-input"
+									id="rating-input-1-2" name="rating-input-1" value="2"> <label for="rating-input-1-2" class="rating-star"></label> <input type="radio"
+									class="rating-input" id="rating-input-1-1" name="rating-input-1" value="1"> <label for="rating-input-1-1" class="rating-star"></label>
+								</span>
+							</div>
+							<div class="row">
+								<h4>시간 선택</h4>
+							</div>
+							<div class="row">
+								<input type="text" name="Time" class="form-control" placeholder="2 (2시간일경우).." autocomplete="off">
+							</div>
+							<div class="row">
+								<div class="search_btn">
+									<div class="col-md-4"></div>
+									<div class="col-md-4">
+										<input class="btn btn-primary" type="submit" value="조회">
+									</div>
+									<div class="col-md-4"></div>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
+				<div class="col-md-8">
+					<div class="rec_show">
+						<div class="row">
 
-				<div class="item">
-					<div class="inform">
-						<img src="../image/infrom_image.png" width="700" height="335">
+							<%
+								for(TotalPath path : (ArrayList<TotalPath>)list) {
+							%>
+							<div class="col-md-4">
+								<div class="rec_content">
+									<div class="rec_ran_image">
+										<div align="center">
+											<div class="row" style="overflow: scrolll;">
+												<div class="rec_title">
+													<h3><%=path.getTotalPathName() %></h3>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div align="center">
+												<div class="rec_subtitle">
+													<h4>국토종주 자전거길</h4>
+												</div>
+											</div>
+										</div>
+										<div align="center">
+											<form action="biroad_control.jsp" name=form2 method="post" class="form-horizontal">
+												<input type=hidden name="action" value="imageIndex">
+												<input type=hidden name="index" value="<%=path.getTotalPathId() %>">
+												<div class="row">
+													<div class="rec_go">
+														<input class="btn btn-success" type="submit" value="Go">
+													</div>
+												</div>
+											</form>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<%
+								}
+							%>
+						</div>
 					</div>
 				</div>
 			</div>
-
-			<!-- Left and right controls -->
-			<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"> <!-- <span class="glyphicon glyphicon-chevron-left" aria-hidden="true">
-				</span> 
-				<span class="sr-only">Previous</span> -->
-			</a> <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"> <!-- 	<span class="glyphicon glyphicon-chevron-right"
-				aria-hidden="true"></span> <span class="sr-only">Next</span> -->
-			</a>
 		</div>
-
-
-
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="../bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript">
+	
+	
 		function checkfield2() {
 			var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 

@@ -3,6 +3,8 @@ package path;
 import java.sql.*;
 import java.util.*;
 
+import totalpath.TotalPath;
+
 public class PathBean {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
@@ -114,12 +116,13 @@ public class PathBean {
 		}
 		return -1;
 	}
-	
+
 	public ArrayList<Path> getPDBList(String tPathId) { // 세부도로 정보출력
 		connect(); // (리스트 출력)
 		ArrayList<Path> datas = new ArrayList<Path>();
 
-		String sql = "select * from path where tpath_id = '"+tPathId+"' order by PATH_ID asc";
+		String sql = "select * from path where tpath_id = '" + tPathId
+				+ "' order by PATH_ID asc";
 		try {
 			pstmt = conn.prepareStatement(sql);
 
@@ -152,7 +155,7 @@ public class PathBean {
 		}
 		return datas;
 	}
-	
+
 	public ArrayList<Path> getPDBList() { // 세부도로 정보출력
 		connect(); // (리스트 출력)
 		ArrayList<Path> datas = new ArrayList<Path>();
@@ -190,8 +193,6 @@ public class PathBean {
 		}
 		return datas;
 	}
-	
-	
 
 	public ArrayList<Path> findInfo(String req, int index) { // 도로검색
 		connect();
@@ -327,23 +328,232 @@ public class PathBean {
 		}
 		return true;
 	}
-	
+
 	public String getTotalPathName(String pathId) {
-		
+
 		connect();
-		String sql = "select TotalPath.TPATH_NAME from TotalPath,Path where Path.Tpath_id = TotalPath.TPATH_ID and Path.PATH_ID = '"+pathId+"'";
+		String sql = "select TotalPath.TPATH_NAME from TotalPath,Path where Path.Tpath_id = TotalPath.TPATH_ID and Path.PATH_ID = '"
+				+ pathId + "'";
 		String retVal = "";
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				retVal = rs.getString(1);
 			}
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return retVal;
+	}
+
+	public ArrayList<Path> recommand(String req, int index) { // 도로추천
+		// 시작,끝,난이도,시간
+		connect();
+		ArrayList<Path> list = new ArrayList<Path>();
+		String sql = "";
+		if (index == 0) {
+			sql = "select * from path where PATH_START like ? order by PATH_NAME asc";
+		} else if (index == 1) {
+			sql = "select * from path where PATH_END like ? order by PATH_NAME asc";
+		} else if (index == 2) {
+			sql = "select * from path where PATH_DIFF like ? order by PATH_NAME asc";
+		} else if (index == 3) {
+			sql = "select * from path where PATH_HOUR like ? order by PATH_NAME asc";
+		}
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			String setReq = "%" + req + "%";
+
+			pstmt.setString(1, setReq);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				Path path = new Path();
+
+				path.setPathId(rs.getString("PATH_ID"));
+				path.setPathName(rs.getString("PATH_NAME"));
+				path.setPathStarX(rs.getString("PATH_STARX"));
+				path.setPathEndX(rs.getString("PATH_ENDX"));
+				path.setPathStarY(rs.getString("PATH_STARY"));
+				path.setPathEndY(rs.getString("PATH_ENDY"));
+				path.setPathStart(rs.getString("PATH_START"));
+				path.setPathEnd(rs.getString("PATH_END"));
+				path.setPathHour(rs.getString("PATH_HOUR"));
+				path.setPathDiff(rs.getString("PATH_DIFF"));
+				path.setPathText(rs.getString("TPATH_TEXT"));
+
+				list.add(path);
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+
+	}
+
+	public ArrayList<Path> recommand2(String req, String req2, int index) { // 도로검색
+		connect();
+		ArrayList<Path> list = new ArrayList<Path>();
+		String sql = "";
+		if (index == 0) {
+			sql = "select * from Path where PATH_START like ? and PATH_END like ? order by PATH_NAME asc";
+		} else if (index == 1) {
+			sql = "select * from Path where PATH_START like ? and PATH_DIFF like ? order by PATH_NAME asc";
+		} else if (index == 2) {
+			sql = "select * from Path where PATH_START like ? and PATH_HOUR like ? order by PATH_NAME asc";
+		} else if (index == 3) {
+			sql = "select * from Path where PATH_END like ? and PATH_DIFF like ? order by PATH_NAME asc";
+		} else if (index == 4) {
+			sql = "select * from Path where PATH_END like ? and PATH_HOUR like ? order by PATH_NAME asc";
+		} else if (index == 5) {
+			sql = "select * from Path where PATH_DIFF like ? and PATH_HOUR like ? order by PATH_NAME asc";
+		}
+		try {
+			pstmt = conn.prepareStatement(sql);
+			String setReq = "%" + req + "%";
+			String setReq2 = "%" + req2 + "%";
+
+			pstmt.setString(1, setReq);
+			pstmt.setString(2, setReq2);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				Path path = new Path();
+
+				path.setPathId(rs.getString("PATH_ID"));
+				path.setPathName(rs.getString("PATH_NAME"));
+				path.setPathStarX(rs.getString("PATH_STARX"));
+				path.setPathEndX(rs.getString("PATH_ENDX"));
+				path.setPathStarY(rs.getString("PATH_STARY"));
+				path.setPathEndY(rs.getString("PATH_ENDY"));
+				path.setPathStart(rs.getString("PATH_START"));
+				path.setPathEnd(rs.getString("PATH_END"));
+				path.setPathHour(rs.getString("PATH_HOUR"));
+				path.setPathDiff(rs.getString("PATH_DIFF"));
+				path.setPathText(rs.getString("PATH_TEXT"));
+
+				list.add(path);
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+
+	}
+
+	public ArrayList<Path> recommand3(String req, String req2, String req3,
+			int index) { // 도로검색
+		connect();
+		ArrayList<Path> list = new ArrayList<Path>();
+		String sql = "";
+		if (index == 0) {
+			sql = "select * from Path where PATH_START like ? and PATH_END like ? and PATH_DIFF like ?order by PATH_NAME asc";
+		} else if (index == 1) {
+			sql = "select * from Path where PATH_START like ? and PATH_END like ? and PATH_HOUR like ?order by PATH_NAME asc";
+		} else if (index == 2) {
+			sql = "select * from Path where PATH_START like ? and PATH_DIFF like ? and PATH_HOUR like ?order by PATH_NAME asc";
+		} else if (index == 3) {
+			sql = "select * from Path where PATH_END like ? and PATH_DIFF like ? and PATH_HOUR like ?order by PATH_NAME asc";
+		}
+		try {
+			pstmt = conn.prepareStatement(sql);
+			String setReq = "%" + req + "%";
+			String setReq2 = "%" + req2 + "%";
+			String setReq3 = "%" + req3 + "%";
+
+			pstmt.setString(1, setReq);
+			pstmt.setString(2, setReq2);
+			pstmt.setString(3, setReq3);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				Path path = new Path();
+
+				path.setPathId(rs.getString("PATH_ID"));
+				path.setPathName(rs.getString("PATH_NAME"));
+				path.setPathStarX(rs.getString("PATH_STARX"));
+				path.setPathEndX(rs.getString("PATH_ENDX"));
+				path.setPathStarY(rs.getString("PATH_STARY"));
+				path.setPathEndY(rs.getString("PATH_ENDY"));
+				path.setPathStart(rs.getString("PATH_START"));
+				path.setPathEnd(rs.getString("PATH_END"));
+				path.setPathHour(rs.getString("PATH_HOUR"));
+				path.setPathDiff(rs.getString("PATH_DIFF"));
+				path.setPathText(rs.getString("PATH_TEXT"));
+
+				list.add(path);
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+
+	}
+
+	public ArrayList<Path> recommand4(String req, String req2, String req3,
+			String req4) { // 도로검색
+		connect();
+		ArrayList<Path> list = new ArrayList<Path>();
+		String sql = "";
+		sql = "select * from Path where PATH_START like ? and PATH_END like ? and PATH_DIFF like ? and PATH_HOUR like ? order by PATH_NAME asc";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			String setReq = "%" + req + "%";
+			String setReq2 = "%" + req2 + "%";
+			String setReq3 = "%" + req3 + "%";
+			String setReq4 = "%" + req4 + "%";
+			pstmt.setString(1, setReq);
+			pstmt.setString(2, setReq2);
+			pstmt.setString(3, setReq3);
+			pstmt.setString(4, setReq4);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				Path path = new Path();
+
+				path.setPathId(rs.getString("PATH_ID"));
+				path.setPathName(rs.getString("PATH_NAME"));
+				path.setPathStarX(rs.getString("PATH_STARX"));
+				path.setPathEndX(rs.getString("PATH_ENDX"));
+				path.setPathStarY(rs.getString("PATH_STARY"));
+				path.setPathEndY(rs.getString("PATH_ENDY"));
+				path.setPathStart(rs.getString("PATH_START"));
+				path.setPathEnd(rs.getString("PATH_END"));
+				path.setPathHour(rs.getString("PATH_HOUR"));
+				path.setPathDiff(rs.getString("PATH_DIFF"));
+				path.setPathText(rs.getString("PATH_TEXT"));
+
+				list.add(path);
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+
 	}
 }
