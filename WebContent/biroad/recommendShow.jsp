@@ -21,8 +21,7 @@
 	ArrayList<TotalPath> list = new ArrayList<TotalPath>();
 	ArrayList<TotalPath> reqlist = (ArrayList<TotalPath>)request.getAttribute("list");
 	
-		list = reqlist;	
-	
+		list = reqlist;
 %>
 
 </head>
@@ -30,9 +29,9 @@
 	<div class="header" id="header">
 		<div class="container">
 			<a href="main.jsp">
-			<div class="header-logo">
-				<h1>BI ROAD</h1>
-			</div>
+				<div class="header-logo">
+					<h1>BI ROAD</h1>
+				</div>
 			</a>
 			<div class="top-nav">
 				<span class="menu"><img src="../image/menu-icon.png" alt="" /></span>
@@ -261,7 +260,7 @@
 								<div class="search_btn">
 									<div class="col-md-4"></div>
 									<div class="col-md-4">
-										<input class="btn btn-primary" type="submit" value="조회">
+										<input id="button" class="btn btn-primary" type="submit" value="조회">
 									</div>
 									<div class="col-md-4"></div>
 								</div>
@@ -282,7 +281,7 @@
 										<div align="center">
 											<div class="row" style="overflow: scrolll;">
 												<div class="rec_title">
-													<h3><%=path.getTotalPathName() %></h3>
+													<h3><%=path.getTotalPathName()%></h3>
 												</div>
 											</div>
 										</div>
@@ -295,8 +294,8 @@
 										</div>
 										<div align="center">
 											<form action="biroad_control.jsp" name=form2 method="post" class="form-horizontal">
-												<input type=hidden name="action" value="imageIndex">
-												<input type=hidden name="index" value="<%=path.getTotalPathId() %>">
+												<input type=hidden name="action" value="imageIndex"> 
+												<input type=hidden name="index" value="<%=path.getTotalPathId()%>">
 												<div class="row">
 													<div class="rec_go">
 														<input class="btn btn-success" type="submit" value="Go">
@@ -320,8 +319,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="../bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript">
-	
-	
 		function checkfield2() {
 			var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 
@@ -366,6 +363,25 @@
 				$("#withForm").toggle();
 			});
 		});
+		
+		var safeColors = ['00','33','66','99','cc','ff'];
+		var rand = function() {
+		    return Math.floor(Math.random()*6);
+		};
+		var randomColor = function() {
+		    var r = safeColors[rand()];
+		    var g = safeColors[rand()];
+		    var b = safeColors[rand()];
+		    return "#"+r+g+b;
+		};
+		
+		/* $(document).ready(function() {
+		    $('#button').click(function() {
+		        $('.rec_content').each(function() {
+		            $(this).css('background',randomColor());
+		        });
+		    });
+		}); */
 	</script>
 </body>
 </html>
